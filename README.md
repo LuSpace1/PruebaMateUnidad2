@@ -13,7 +13,8 @@ Esta es una aplicación web interactiva desarrollada en Python con Streamlit par
 
 * app.py: Código principal de la aplicación Streamlit.
 * test_validation.py: Script para comprobar la lógica de evaluación de respuestas.
-* iniciar_prueba.bat: Ejecutable para inicializar el entorno y correr la app en Windows.
+* iniciar_prueba.bat: Ejecutable para inicializar el entorno y correr la app en Windows de forma automatizada.
+* requirements.txt: Archivo de dependencias del proyecto.
 * .gitignore: Configuración para excluir archivos del entorno virtual en Git.
 
 ## Instalación y Uso
@@ -22,21 +23,36 @@ Esta es una aplicación web interactiva desarrollada en Python con Streamlit par
 
 1. Descargue o clone este repositorio.
 2. Ejecute el archivo iniciar_prueba.bat haciendo doble clic en él.
-3. Se creará el entorno virtual, se instalarán las dependencias e iniciará la aplicación en el navegador web de forma automática.
+3. Se creará el entorno virtual local de forma automática, se instalarán las dependencias del archivo requirements.txt e iniciará la aplicación en el navegador web.
 
-### Ejecución Manual (Cualquier Sistema)
+### Instalación Manual con uv (Recomendado)
 
 1. Clonar el repositorio:
    git clone https://github.com/LuSpace1/PruebaMateUnidad2.git
    cd PruebaMateUnidad2
 
-2. Crear y activar un entorno virtual:
+2. Crear el entorno virtual:
+   uv venv
+
+3. Instalar dependencias:
+   uv pip install -r requirements.txt
+
+4. Ejecutar la aplicación:
+   uv run streamlit run app.py
+
+### Instalación Manual con pip estándar
+
+1. Clonar el repositorio:
+   git clone https://github.com/LuSpace1/PruebaMateUnidad2.git
+   cd PruebaMateUnidad2
+
+2. Crear y activar el entorno virtual:
    python -m venv .venv
    # En Windows: .venv\Scripts\activate
    # En macOS/Linux: source .venv/bin/activate
 
 3. Instalar dependencias:
-   pip install streamlit pandas
+   pip install -r requirements.txt
 
 4. Ejecutar la aplicación:
    streamlit run app.py
