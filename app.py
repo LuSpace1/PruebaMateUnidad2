@@ -455,23 +455,27 @@ with st.container():
     # AYUDANTE DE PREGUNTA 1
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
-        <div class="helper-box">
-            <h4>🧠 Razonamiento Pedagógico</h4>
-            <p>Este ejercicio consiste en <strong>interpolación polinómica</strong>. Tienes una función cúbica general de la forma <code>f(x) = ax³ + bx² + cx + d</code> y conoces cuatro puntos por los que pasa. Al evaluar la función en cada punto, obtienes un sistema de 4 ecuaciones lineales con 4 incógnitas (a, b, c, d) que debes resolver. Una vez determinados los coeficientes, utilizas la primera derivada (<code>f'(x) = 0</code>) para encontrar los valores críticos y los máximos y mínimos, y la segunda derivada (<code>f''(x) = 0</code>) para el punto de inflexión.</p>
-            
-            <h4>🛠️ Cómo resolverlo en GeoGebra</h4>
-            <ol>
-                <li>Ingresa los cuatro puntos dados en la barra de entrada, por ejemplo: <br><code>A = (-4, -1890)</code>, <code>B = (-2, -818)</code>, <code>C = (0, 350)</code> y <code>D = (5, 2430)</code>.</li>
-                <li>Usa la función de ajuste polinómico escribiendo: <br><code>f(x) = Polinomio({A, B, C, D})</code>. GeoGebra calculará la ecuación exacta.</li>
-                <li>Para los extremos locales (puntos críticos), escribe: <br><code>Extremo(f)</code>. Esto marcará los máximos y mínimos relativos en la gráfica.</li>
-                <li>Para el punto de inflexión, escribe: <br><code>PuntoInflexion(f)</code>.</li>
-                <li>Para ver visualmente dónde es creciente, observa los intervalos de la gráfica que suben de izquierda a derecha (entre el mínimo y el máximo).</li>
-            </ol>
-            
-            <h4>🌍 Aplicación en la Vida Real</h4>
-            <p>Este concepto se utiliza en el diseño de <strong>montañas rusas o trazados de carreteras</strong>. Los ingenieros conocen puntos clave de paso obligatorios por donde debe ir la vía y usan polinomios de tercer grado para conectar dichos puntos con transiciones suaves, seguras y sin saltos bruscos en las fuerzas gravitacionales.</p>
-        </div>
-        """, unsafe_allow_html=True)
+### Razonamiento Pedagógico
+Este ejercicio consiste en **interpolación polinómica**. Tienes una función cúbica general de la forma `f(x) = ax³ + bx² + cx + d` y conoces cuatro puntos por los que pasa. Al evaluar la función en cada uno de ellos, obtienes un sistema de 4 ecuaciones lineales con 4 incógnitas (a, b, c, d) que debes resolver.
+
+* **La Derivada (Primera Derivada)**: Mide el ritmo de cambio instantáneo de una función. Gráficamente, representa la **pendiente de la recta tangente** en cualquier punto de la curva.
+  * **Cómo afecta**: Si la derivada es positiva, la función sube (es creciente). Si es negativa, la función baja (es decreciente). Si es exactamente cero, la recta tangente es completamente horizontal, indicando la ubicación de los **valores críticos** (donde la curva tiene picos máximos o valles mínimos).
+* **La Segunda Derivada**: Es la derivada de la primera derivada. Mide el ritmo al que cambia la pendiente de la curva (es decir, la aceleración de la función).
+  * **Cómo afecta**: Determina la **concavidad** de la curva. Si es positiva, la curva se dobla hacia arriba (cóncava hacia arriba). Si es negativa, se dobla hacia abajo (cóncava hacia abajo). Si es exactamente cero y cambia de signo, define el **punto de inflexión** (donde cambia la dirección del doblado de la curva).
+
+### Cómo resolverlo en GeoGebra
+1. Ingresa los cuatro puntos dados en la barra de entrada:
+   * `A = (-4, -1890)`
+   * `B = (-2, -818)`
+   * `C = (0, 350)`
+   * `D = (5, 2430)`
+2. Usa la función de ajuste polinómico escribiendo: `f(x) = Polinomio({A, B, C, D})`. GeoGebra calculará la ecuación exacta.
+3. Para los extremos locales (puntos críticos donde la primera derivada es cero), escribe: `Extremo(f)`. Esto marcará los máximos y mínimos relativos en la gráfica.
+4. Para el punto de inflexión (donde la segunda derivada es cero), escribe: `PuntoInflexion(f)`.
+
+### Aplicación en la Vida Real
+Este concepto se utiliza en el diseño de **montañas rusas o trazados de carreteras**. Los ingenieros conocen puntos clave de paso obligatorios por donde debe ir la vía y usan polinomios de tercer grado para conectar dichos puntos con transiciones suaves, seguras y sin cambios bruscos en las fuerzas gravitacionales experimentadas por los pasajeros.
+""")
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -509,22 +513,23 @@ with st.container():
     # AYUDANTE DE PREGUNTA 2
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
-        <div class="helper-box">
-            <h4>🧠 Razonamiento Pedagógico</h4>
-            <p>La <strong>primera derivada</strong> mide la pendiente de la recta tangente. Si es igual a 0, significa que la curva tiene rectas tangentes completamente horizontales. Esto sucede únicamente en los <strong>picos (máximos)</strong> o <strong>valles (mínimos)</strong> de la función. La <strong>segunda derivada</strong> mide la concavidad (curvatura). Si es igual a 0, representa el <strong>punto de inflexión</strong>, que es donde la función cambia su curvatura (de doblarse hacia abajo a doblarse hacia arriba, o viceversa).</p>
-            
-            <h4>🛠️ Cómo resolverlo en GeoGebra</h4>
-            <ol>
-                <li>Ingresa la función en la barra de entrada: <br><code>f(x) = x³ - 3x + 10</code> (usa la fórmula correspondiente a tu variación).</li>
-                <li>Para hallar dónde la primera derivada es cero (extremos relativos), escribe: <br><code>Extremo(f)</code>. GeoGebra te indicará las coordenadas de los máximos y mínimos.</li>
-                <li>Para hallar dónde la segunda derivada es cero, escribe: <br><code>PuntoInflexion(f)</code>. Obtendrás las coordenadas del punto de inflexión.</li>
-                <li><em>Alternativa simbólica (Vista CAS):</em> Puedes resolver directamente escribiendo <code>Resolver(f'(x) = 0)</code> para la primera parte, y <code>Resolver(f'') (x) = 0)</code> para la segunda.</li>
-            </ol>
-            
-            <h4>🌍 Aplicación en la Vida Real</h4>
-            <p>En <strong>economía y optimización de negocios</strong>, el punto de primera derivada cero te permite encontrar la producción exacta para <strong>maximizar los ingresos</strong> o <strong>minimizar los costos</strong>. El punto de segunda derivada cero (punto de inflexión) representa la ley de rendimientos decrecientes: el punto exacto donde la efectividad de una campaña publicitaria comienza a saturarse.</p>
-        </div>
-        """, unsafe_allow_html=True)
+### Razonamiento Pedagógico
+En este ejercicio analizamos cómo las derivadas caracterizan geométricamente a una curva:
+
+* **La Derivada (Primera Derivada)**: Mide el ritmo de cambio instantáneo. Gráficamente, representa la **pendiente de la recta tangente** a la gráfica en cada punto.
+  * **Cómo afecta**: Si la derivada es cero, significa que la recta tangente es completamente horizontal. Esto ocurre únicamente en los puntos extremos de la gráfica: los picos superiores (**máximos relativos**) y los valles inferiores (**mínimos relativos**).
+* **La Segunda Derivada**: Mide la curvatura o aceleración de la función (el ritmo de cambio de la primera derivada).
+  * **Cómo afecta**: Si es cero, indica que la curva no se dobla en ninguna dirección en ese instante. Representa el **punto de inflexión**, el lugar exacto de la gráfica donde la función cambia su curvatura (de cóncava a convexa o viceversa).
+
+### Cómo resolverlo en GeoGebra
+1. Escribe la función en la barra de entrada: `f(x) = x³ - 3x + 10` (o usa la correspondiente a tu variación).
+2. Para encontrar dónde la primera derivada es cero (los puntos críticos extremos), escribe: `Extremo(f)`. GeoGebra te marcará en la gráfica los puntos correspondientes.
+3. Para encontrar dónde la segunda derivada es cero (punto de inflexión), escribe: `PuntoInflexion(f)`.
+4. *Alternativa Simbólica (CAS)*: Puedes abrir la vista CAS y escribir `Resolver(f'(x) = 0)` para la primera derivada, y `Resolver(f''(x) = 0)` para la segunda.
+
+### Aplicación en la Vida Real
+En **economía y optimización de negocios**, el punto donde la primera derivada es cero permite encontrar la producción exacta para **maximizar los beneficios** o **minimizar los costos operativos**. El punto donde la segunda derivada es cero (punto de inflexión) representa la ley de rendimientos decrecientes: el límite donde invertir más en marketing comienza a ser menos efectivo debido a la saturación.
+""")
         
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -597,22 +602,25 @@ with st.container():
     # AYUDANTE DE PREGUNTA 3
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
-        <div class="helper-box">
-            <h4>🧠 Razonamiento Pedagógico</h4>
-            <p>Se te da una tabla con valores de la derivada <code>f'(x) = M(x)</code>. Debes descubrir la regla general (el patrón) en los números: verás una parte lineal y una parte con fracciones. Ambas siguen una <strong>progresión aritmética</strong> simple (primer término + diferencia * (x - 1)). Para encontrar <code>f(x)</code>, debes <strong>integrar</strong> la función de la pendiente. Para velocidad y aceleración: la velocidad es la derivada del espacio (o sea, <code>V(t) = f'(t) = M(t)</code>) y la aceleración es la derivada de la velocidad (<code>A(t) = M'(t)</code>).</p>
-            
-            <h4>🛠️ Cómo resolverlo en GeoGebra</h4>
-            <ol>
-                <li>Define la función de la pendiente en la entrada usando la fórmula deducida:<br><code>M(x) = 6x + 4 + 9 / (3x + 1)</code> (o la correspondiente a tu variación).</li>
-                <li>Para hallar <code>f(x)</code> (la integral), escribe en la entrada: <br><code>Integral(M)</code>. GeoGebra calculará la primitiva simbólicamente agregando una constante.</li>
-                <li>Para obtener la velocidad en t = 5, solo tienes que evaluar la pendiente en 5. Escribe:<br><code>M(5)</code>. Cambia la vista a decimal para ver el resultado con 3 decimales.</li>
-                <li>Para obtener la aceleración en t = 2, calcula la derivada de la velocidad escribiendo: <br><code>A(x) = Derivada(M)</code> y luego evalúa la aceleración con: <br><code>A(2)</code>.</li>
-            </ol>
-            
-            <h4>🌍 Aplicación en la Vida Real</h4>
-            <p>Este análisis es el pilar de la <strong>navegación inercial</strong>. Los teléfonos móviles o los sistemas de guiado de los cohetes espaciales usan sensores (acelerómetros) que miden la aceleración de forma continua. Integrando esa aceleración una vez obtienen la velocidad, e integrándola por segunda vez calculan la posición exacta del vehículo.</p>
-        </div>
-        """, unsafe_allow_html=True)
+### Razonamiento Pedagógico
+En este problema analizamos la relación entre progresiones y cálculo aplicado al movimiento de una partícula:
+
+* **El patrón de la pendiente**: Los valores de `M(x)` muestran una parte lineal y una fraccionaria que siguen una progresión aritmética (primer término + diferencia * (x - 1)). La pendiente es la derivada de la posición: `M(x) = f'(x)`.
+* **La Derivada (Velocidad)**: La velocidad instantánea `V(t)` de un objeto es la **primera derivada de su posición** con respecto al tiempo, representando la tasa de cambio de la distancia recorrida.
+  * **Cómo afecta**: Si la velocidad es positiva, la partícula avanza; si es negativa, retrocede. Para calcular la velocidad a los 5 segundos, evaluamos directamente la primera derivada en dicho punto (`V(5) = f'(5)`).
+* **La Segunda Derivada (Aceleración)**: La aceleración `A(t)` es la tasa de cambio de la velocidad con respecto al tiempo, lo que equivale a la **segunda derivada de la posición** (`A(t) = V'(t) = f''(t)`).
+  * **Cómo afecta**: Si la aceleración es positiva, la partícula está acelerando (aumentando su velocidad); si es negativa, está frenando (desacelerando). Para hallarla, derivamos la función de la pendiente `M(x)` y la evaluamos en t = 2.
+* **Integración**: Para recuperar la función de posición `f(x)` a partir de su derivada `M(x)`, aplicamos la operación inversa de la derivada, que es la **integral indefinida** (sumando la constante de integración `C`).
+
+### Cómo resolverlo en GeoGebra
+1. Define la función de la pendiente en la barra de entrada: `M(x) = 6x + 4 + 9 / (3x + 1)` (o la correspondiente a tu variación).
+2. Para encontrar la función de posición `f(x)`, calcula la integral indefinida escribiendo: `Integral(M)`.
+3. Para obtener la velocidad a los 5 segundos, evalúa la derivada de forma directa escribiendo: `M(5)`.
+4. Para obtener la aceleración a los 2 segundos, calcula la derivada de la pendiente escribiendo: `A(x) = Derivada(M)`, y luego evalúala en 2 escribiendo: `A(2)`.
+
+### Aplicación en la Vida Real
+Es la base del funcionamiento de los **sistemas de navegación inercial** en naves espaciales, aviones y teléfonos inteligentes. Los sensores miden de forma continua la aceleración (segunda derivada), la cual se integra una vez para obtener la velocidad (primera derivada) y se integra por segunda vez para calcular la posición exacta del dispositivo en tiempo real.
+""")
         
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -700,29 +708,24 @@ with st.container():
     # AYUDANTE DE PREGUNTA 4
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
-        <div class="helper-box">
-            <h4>🧠 Razonamiento Pedagógico</h4>
-            <p>Se realiza un <strong>análisis completo</strong> de una función cúbica dada:</p>
-            <ul>
-                <li>La <strong>primera derivada</strong> describe la pendiente: dónde la función crece (<code>f'(x) > 0</code>) y decrece (<code>f'(x) < 0</code>).</li>
-                <li>Los puntos máximos y mínimos ocurren cuando la derivada es cero. La pendiente en esos puntos siempre es 0.</li>
-                <li>La <strong>segunda derivada</strong> indica la concavidad: cóncava hacia arriba (<code>f''(x) > 0</code>).</li>
-                <li>El punto donde la pendiente es mínima coincide con el <strong>punto de inflexión</strong> (donde <code>f''(x) = 0</code>), que es donde la curva cambia de dirección y se vuelve horizontal o empieza a inclinarse en sentido opuesto de la forma más pronunciada.</li>
-            </ul>
-            
-            <h4>🛠️ Cómo resolverlo en GeoGebra</h4>
-            <ol>
-                <li>Ingresa la función cúbica: <br><code>f(x) = 360x³ - 1836x² + 2430x</code> (o la correspondiente).</li>
-                <li>Escribe <code>f'(x)</code> en la entrada para calcular la derivada de forma analítica instantánea.</li>
-                <li>Para hallar el intervalo donde decrece, puedes visualizar la gráfica (el tramo que va de bajada entre los extremos) o resolver algebraicamente escribiendo: <br><code>Resolver(f'(x) < 0)</code>.</li>
-                <li>Para encontrar el máximo relativo, escribe: <br><code>Extremo(f)</code> y lee las coordenadas del punto pico superior.</li>
-                <li>Para la concavidad y el punto de pendiente mínima, escribe: <br><code>PuntoInflexion(f)</code>. La coordenada X define el inicio del intervalo cóncavo hacia arriba (<code>x > X_inflexion</code>) y las coordenadas (X, Y) corresponden al punto de pendiente mínima.</li>
-            </ol>
-            
-            <h4>🌍 Aplicación en la Vida Real</h4>
-            <p>Este tipo de análisis se emplea en la <strong>planificación financiera de proyectos</strong>. La derivada indica el ritmo de flujo de caja (pérdida o ganancia de dinero). El punto de pendiente mínima representa el momento crítico de mayor tasa de gasto (punto de máxima presión de liquidez), necesario para dimensionar las reservas monetarias de la empresa.</p>
-        </div>
-        """, unsafe_allow_html=True)
+### Razonamiento Pedagógico
+En este análisis de una función cúbica conocida aplicamos el estudio de curvas mediante derivadas:
+
+* **La Derivada (Primera Derivada)**: Representa la **pendiente de la recta tangente** en cada punto y mide la velocidad instantánea con la que cambia la función.
+  * **Cómo afecta**: Divide el dominio en tramos. Donde la derivada es negativa (`f'(x) < 0`), la función está cayendo (decrece). Donde es positiva (`f'(x) > 0`), la función sube (crece). En los puntos donde cambia de signo, la derivada es cero (`f'(x) = 0`), lo cual corresponde al máximo y mínimo relativo.
+* **La Segunda Derivada**: Mide el doblado de la curva (concavidad), es decir, la tasa de cambio de la pendiente.
+  * **Cómo afecta**: Si es positiva (`f''(x) > 0`), la curva es cóncava hacia arriba (tiene forma de "U"). Si es negativa, es cóncava hacia abajo. El punto donde la segunda derivada es exactamente cero (`f''(x) = 0`) es el **punto de inflexión**. En una función cúbica, este punto representa también el lugar donde la pendiente de la recta tangente alcanza su **valor mínimo** absoluto.
+
+### Cómo resolverlo en GeoGebra
+1. Ingresa la función en la barra de entrada: `f(x) = 360x³ - 1836x² + 2430x` (o la correspondiente).
+2. Para calcular la derivada analítica escribe: `Derivada(f)` o simplemente `f'(x)`.
+3. Para hallar el intervalo de decrecimiento escribe: `Resolver(f'(x) < 0)`. Obtendrás el intervalo exacto.
+4. Para encontrar el valor del máximo relativo escribe: `Extremo(f)` y evalúa las coordenadas del pico.
+5. Para la concavidad y el punto de pendiente mínima, escribe: `PuntoInflexion(f)`. La coordenada X de este punto te dará la frontera de la concavidad, y sus coordenadas (X, Y) indican el punto donde la pendiente es mínima.
+
+### Aplicación en la Vida Real
+Se utiliza en la **planificación de flujos de caja y liquidez de empresas**. La derivada mide el ritmo de ingresos y egresos de efectivo. El punto de pendiente mínima representa el momento de mayor presión de liquidez (tasa máxima de salida de dinero), fundamental para asegurar que la compañía cuente con las reservas de capital necesarias para afrontar ese instante crítico.
+""")
         
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -805,31 +808,27 @@ with st.container():
     # AYUDANTE DE PREGUNTA 5
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
-        <div class="helper-box">
-            <h4>🧠 Razonamiento Pedagógico</h4>
-            <p>La <strong>función logística</strong> modela fenómenos que crecen de manera acelerada (exponencial) al principio, pero que luego se ralentizan debido a restricciones ambientales o físicas, estabilizándose alrededor de un techo o límite.</p>
-            <ul>
-                <li>El parámetro <strong>A</strong> es la asíntota superior o límite máximo (capacidad de carga).</li>
-                <li>El parámetro <strong>K</strong> es la tasa de crecimiento.</li>
-                <li>El parámetro <strong>B</strong> define la traslación horizontal de la curva.</li>
-                <li>El <strong>punto de inflexión</strong> marca el momento donde el crecimiento deja de acelerar y empieza a desacelerar. Ocurre exactamente en la mitad de la capacidad de carga (<code>y = A / 2</code>) y en la coordenada <code>x = ln(B) / K</code>.</li>
-                <li>La <strong>máxima pendiente</strong> (tasa de cambio máxima) ocurre justamente en el punto de inflexión y equivale a la fórmula: <code>pendiente_max = A * K / 4</code>.</li>
-            </ul>
-            
-            <h4>🛠️ Cómo resolverlo en GeoGebra</h4>
-            <ol>
-                <li>Abre la vista de <strong>Hoja de Cálculo</strong> en GeoGebra.</li>
-                <li>Ingresa las dos columnas de datos x e y. Selecciona las celdas, haz clic derecho y selecciona <strong>Crear > Lista de Puntos</strong>. Esto creará una lista llamada <code>l1</code>.</li>
-                <li>En la barra de entrada, ejecuta el ajuste logístico automático escribiendo: <br><code>AjusteLogístico(l1)</code> o <code>AjusteCrecimiento(l1)</code>. Esto trazará la curva óptima en pantalla.</li>
-                <li>Lee los parámetros resultantes de la ecuación e identifícalos con A, B y K.</li>
-                <li>Para hallar el punto de inflexión, escribe: <br><code>PuntoInflexion(f)</code>.</li>
-                <li>Para la pendiente máxima, puedes evaluar analíticamente con <code>A * K / 4</code> o calcular la derivada de la curva en el valor de x de la inflexión.</li>
-            </ol>
-            
-            <h4>🌍 Aplicación en la Vida Real</h4>
-            <p>Las curvas logísticas son vitales para modelar la <strong>propagación de epidemias</strong> (número total de contagiados que se estabiliza al alcanzar la inmunidad de rebaño) o la <strong>adopción de productos tecnológicos</strong> en el mercado (como los smartphones), que se satura cuando la mayor parte de la población ya los posee.</p>
-        </div>
-        """, unsafe_allow_html=True)
+### Razonamiento Pedagógico
+Este problema estudia una **curva de crecimiento logístico**, la cual modela crecimientos acelerados que se topan con límites físicos o ambientales:
+
+* **Parámetro A**: Es el límite superior o **asíntota horizontal** (capacidad de carga máxima) a la que tiende la función cuando el tiempo crece hacia el infinito.
+* **Parámetro K**: Controla la velocidad o tasa intrínseca de crecimiento.
+* **La Derivada (Velocidad de Crecimiento)**: Representa el ritmo al cual se incrementa la cantidad en cada instante de tiempo.
+  * **Cómo afecta**: Al inicio, la velocidad aumenta rápidamente (crecimiento exponencial). Sin embargo, al acercarse al límite `A`, la velocidad disminuye hasta llegar a cero (saturación).
+* **Punto de Inflexión (Máxima Derivada)**: Es el punto exacto donde la aceleración es cero (la **segunda derivada es cero**).
+  * **Cómo afecta**: Representa el instante de **máxima velocidad de crecimiento** (donde la pendiente de la curva es la más empinada posible). A partir de este punto, el crecimiento continúa, pero cada vez más despacio. En cualquier modelo logístico simétrico, este punto ocurre siempre a la mitad del límite máximo (es decir, en `y = A / 2`) y en `x = ln(B) / K`.
+
+### Cómo resolverlo en GeoGebra
+1. Abre la vista de **Hoja de Cálculo** en GeoGebra.
+2. Ingresa las dos columnas de datos x e y. Selecciona las celdas, haz clic derecho y selecciona **Crear > Lista de Puntos** para generar la lista (normalmente llamada `l1`).
+3. Traza la curva logística que mejor se ajuste a los datos escribiendo: `AjusteLogístico(l1)`. GeoGebra calculará la ecuación de inmediato.
+4. Extrae los coeficientes resultantes de la ecuación para identificar A, B y K.
+5. Para encontrar las coordenadas del punto de inflexión, escribe: `PuntoInflexion(f)`.
+6. Para hallar la máxima pendiente, calcula el valor de la derivada en la coordenada X del punto de inflexión, o utiliza la relación teórica: `pendiente_max = A * K / 4`.
+
+### Aplicación en la Vida Real
+Se utiliza en la **propagación de epidemias** (donde el número total de contagiados empieza exponencialmente, alcanza su velocidad máxima en el punto de inflexión y finalmente se estabiliza debido a la inmunidad de rebaño) o en la **penetración de nuevas tecnologías en el mercado** (como la adopción de internet), que se detiene cuando la población total ya cuenta con el servicio.
+""")
         
     st.markdown('</div>', unsafe_allow_html=True)
 
