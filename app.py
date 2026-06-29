@@ -10,12 +10,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilo personalizado para un diseño premium
+# Estilo personalizado para un diseño premium y adaptable (Modo Claro/Oscuro)
 st.markdown("""
 <style>
-    .main {
-        background-color: #f7f9fc;
-    }
     .reportview-container {
         font-family: 'Outfit', 'Inter', sans-serif;
     }
@@ -23,11 +20,12 @@ st.markdown("""
         border-radius: 12px;
     }
     .metric-card {
-        background-color: white;
+        background-color: var(--background-color, #ffffff);
+        color: var(--text-color, #0f172a);
         padding: 20px;
         border-radius: 15px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        border: 1px solid #eef2f6;
+        border: 1px solid rgba(128,128,128,0.15);
         text-align: center;
     }
     .metric-value {
@@ -37,27 +35,32 @@ st.markdown("""
     }
     .metric-label {
         font-size: 0.9rem;
-        color: #64748b;
+        color: var(--text-color, #64748b);
+        opacity: 0.8;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
     .question-box {
-        background-color: white;
+        background-color: var(--background-color, #ffffff);
+        color: var(--text-color, #0f172a);
         padding: 25px;
         border-radius: 15px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         margin-bottom: 25px;
         border-left: 5px solid #0284c7;
+        border-right: 1px solid rgba(128,128,128,0.1);
+        border-top: 1px solid rgba(128,128,128,0.1);
+        border-bottom: 1px solid rgba(128,128,128,0.1);
     }
     .question-title {
         font-size: 1.25rem;
         font-weight: 600;
-        color: #0f172a;
+        color: var(--text-color, #0f172a);
         margin-bottom: 15px;
     }
     .subquestion-title {
         font-weight: 500;
-        color: #334155;
+        color: var(--text-color, #334155);
         margin-top: 10px;
     }
     .chilean-nota {
@@ -69,17 +72,18 @@ st.markdown("""
     }
     .nota-aprobado {
         color: #0d9488;
-        background-color: #ccfbf1;
+        background-color: rgba(13, 148, 136, 0.15);
         border: 2px solid #0d9488;
     }
     .nota-reprobado {
         color: #e11d48;
-        background-color: #ffe4e6;
+        background-color: rgba(225, 29, 72, 0.15);
         border: 2px solid #e11d48;
     }
     .helper-box {
-        background-color: #f0f9ff;
-        border: 1px solid #bae6fd;
+        background-color: rgba(2, 132, 199, 0.05);
+        border: 1px solid rgba(2, 132, 199, 0.2);
+        color: var(--text-color, #0f172a);
         border-radius: 10px;
         padding: 15px;
         margin-top: 10px;
