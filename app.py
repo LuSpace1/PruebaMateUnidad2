@@ -135,6 +135,32 @@ def calcular_nota(puntaje, puntaje_max, exigencia=0.6):
         nota = 4.0 + 3.0 * ((puntaje - puntaje_corte) / (puntaje_max - puntaje_corte))
     return round(nota, 1)
 
+# Inicializar variables de estado en session_state
+if "prueba_enviada" not in st.session_state:
+    st.session_state["prueba_enviada"] = False
+if "respuestas_usuario" not in st.session_state:
+    st.session_state["respuestas_usuario"] = {}
+if "feedback_respuestas" not in st.session_state:
+    st.session_state["feedback_respuestas"] = {}
+if "puntos_obtenidos" not in st.session_state:
+    st.session_state["puntos_obtenidos"] = 0.0
+if "nota_final" not in st.session_state:
+    st.session_state["nota_final"] = 1.0
+if "detalles" not in st.session_state:
+    st.session_state["detalles"] = []
+
+def dibujar_feedback(key):
+    if st.session_state.get("prueba_enviada", False):
+        f_data = st.session_state.get("feedback_respuestas", {}).get(key, None)
+        if f_data:
+            ok = f_data["ok"]
+            ingresado = f_data["ingresado"]
+            esperado = f_data["esperado"]
+            if ok:
+                st.markdown(f'<div style="color: #0d9488; font-weight: 600; font-size: 0.8rem; margin-top: 1px; margin-bottom: 2px;">✅ ¡Correcto!</div>', unsafe_allow_html=True)
+            else:
+                st.markdown(f'<div style="color: #e11d48; font-weight: 600; font-size: 0.8rem; margin-top: 1px; margin-bottom: 2px;">❌ Incorrecto<br><span style="font-size: 0.72rem; font-weight: normal; opacity: 0.9;">Ingresado: "{ingresado}"<br>Esperado: "{esperado}"</span></div>', unsafe_allow_html=True)
+
 # ----------------- BASE DE DATOS DE VARIACIONES -----------------
 VARIACIONES = {
     "Variación 1 (Original)": {
@@ -361,19 +387,27 @@ with st.container():
     with col_a1:
         st.markdown('<div class="inline-text">La función f es = </div>', unsafe_allow_html=True)
     with col_a2:
-        respuestas["p1_a"] = st.text_input("", key="p1_a", label_visibility="collapsed")
+        val_p1_a = st.session_state["respuestas_usuario"].get("p1_a", "")
+        respuestas["p1_a"] = st.text_input("", value=val_p1_a, key="p1_a", label_visibility="collapsed")
+        dibujar_feedback("p1_a")
     with col_a3:
         st.markdown('<div class="inline-text"> x³ + </div>', unsafe_allow_html=True)
     with col_a4:
-        respuestas["p1_b"] = st.text_input("", key="p1_b", label_visibility="collapsed")
+        val_p1_b = st.session_state["respuestas_usuario"].get("p1_b", "")
+        respuestas["p1_b"] = st.text_input("", value=val_p1_b, key="p1_b", label_visibility="collapsed")
+        dibujar_feedback("p1_b")
     with col_a5:
         st.markdown('<div class="inline-text"> x² + </div>', unsafe_allow_html=True)
     with col_a6:
-        respuestas["p1_c"] = st.text_input("", key="p1_c", label_visibility="collapsed")
+        val_p1_c = st.session_state["respuestas_usuario"].get("p1_c", "")
+        respuestas["p1_c"] = st.text_input("", value=val_p1_c, key="p1_c", label_visibility="collapsed")
+        dibujar_feedback("p1_c")
     with col_a7:
         st.markdown('<div class="inline-text"> x + </div>', unsafe_allow_html=True)
     with col_a8:
-        respuestas["p1_d"] = st.text_input("", key="p1_d", label_visibility="collapsed")
+        val_p1_d = st.session_state["respuestas_usuario"].get("p1_d", "")
+        respuestas["p1_d"] = st.text_input("", value=val_p1_d, key="p1_d", label_visibility="collapsed")
+        dibujar_feedback("p1_d")
     with col_a9:
         st.write("")
         
@@ -386,7 +420,10 @@ with st.container():
         correct_crit_str = datos["p1"]["valores_criticos_str"]
         opciones_b = ["Seleccionar...", correct_crit_str, "4 y -6", "5 y -7", "6 y 8", "-6 y 8"]
         opciones_b = list(dict.fromkeys(opciones_b))
-        respuestas["p1_crit_sel"] = st.selectbox("", opciones_b, key="p1_crit_sel", label_visibility="collapsed")
+        val_p1_crit = st.session_state["respuestas_usuario"].get("p1_crit_sel", "Seleccionar...")
+        idx_crit = opciones_b.index(val_p1_crit) if val_p1_crit in opciones_b else 0
+        respuestas["p1_crit_sel"] = st.selectbox("", opciones_b, index=idx_crit, key="p1_crit_sel", label_visibility="collapsed")
+        dibujar_feedback("p1_crit_sel")
     with col_b3:
         st.write("")
 
@@ -398,11 +435,15 @@ with st.container():
     with col_c2:
         st.markdown('<div class="inline-text"> ( </div>', unsafe_allow_html=True)
     with col_c3:
-        respuestas["p1_min_x"] = st.text_input("", key="p1_min_x", label_visibility="collapsed")
+        val_p1_min_x = st.session_state["respuestas_usuario"].get("p1_min_x", "")
+        respuestas["p1_min_x"] = st.text_input("", value=val_p1_min_x, key="p1_min_x", label_visibility="collapsed")
+        dibujar_feedback("p1_min_x")
     with col_c4:
         st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
     with col_c5:
-        respuestas["p1_min_y"] = st.text_input("", key="p1_min_y", label_visibility="collapsed")
+        val_p1_min_y = st.session_state["respuestas_usuario"].get("p1_min_y", "")
+        respuestas["p1_min_y"] = st.text_input("", value=val_p1_min_y, key="p1_min_y", label_visibility="collapsed")
+        dibujar_feedback("p1_min_y")
     with col_c6:
         st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
 
@@ -414,11 +455,15 @@ with st.container():
     with col_d2:
         st.markdown('<div class="inline-text"> ( </div>', unsafe_allow_html=True)
     with col_d3:
-        respuestas["p1_max_x"] = st.text_input("", key="p1_max_x", label_visibility="collapsed")
+        val_p1_max_x = st.session_state["respuestas_usuario"].get("p1_max_x", "")
+        respuestas["p1_max_x"] = st.text_input("", value=val_p1_max_x, key="p1_max_x", label_visibility="collapsed")
+        dibujar_feedback("p1_max_x")
     with col_d4:
         st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
     with col_d5:
-        respuestas["p1_max_y"] = st.text_input("", key="p1_max_y", label_visibility="collapsed")
+        val_p1_max_y = st.session_state["respuestas_usuario"].get("p1_max_y", "")
+        respuestas["p1_max_y"] = st.text_input("", value=val_p1_max_y, key="p1_max_y", label_visibility="collapsed")
+        dibujar_feedback("p1_max_y")
     with col_d6:
         st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
 
@@ -430,11 +475,15 @@ with st.container():
     with col_e2:
         st.markdown('<div class="inline-text"> ( </div>', unsafe_allow_html=True)
     with col_e3:
-        respuestas["p1_inf_x"] = st.text_input("", key="p1_inf_x", label_visibility="collapsed")
+        val_p1_inf_x = st.session_state["respuestas_usuario"].get("p1_inf_x", "")
+        respuestas["p1_inf_x"] = st.text_input("", value=val_p1_inf_x, key="p1_inf_x", label_visibility="collapsed")
+        dibujar_feedback("p1_inf_x")
     with col_e4:
         st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
     with col_e5:
-        respuestas["p1_inf_y"] = st.text_input("", key="p1_inf_y", label_visibility="collapsed")
+        val_p1_inf_y = st.session_state["respuestas_usuario"].get("p1_inf_y", "")
+        respuestas["p1_inf_y"] = st.text_input("", value=val_p1_inf_y, key="p1_inf_y", label_visibility="collapsed")
+        dibujar_feedback("p1_inf_y")
     with col_e6:
         st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
 
@@ -495,7 +544,10 @@ with st.container():
         opt_der1_2 = datos["p2"]["p1_der_cero_opt2"]
         opciones_p2_a = ["Seleccionar...", opt_der1_1, opt_der1_2, "(0,10)", "(1,12)", "(-1,8)"]
         opciones_p2_a = list(dict.fromkeys(opciones_p2_a))
-        respuestas["p2_a"] = st.selectbox("", opciones_p2_a, key="p2_a", label_visibility="collapsed")
+        val_p2_a = st.session_state["respuestas_usuario"].get("p2_a", "Seleccionar...")
+        idx_p2_a = opciones_p2_a.index(val_p2_a) if val_p2_a in opciones_p2_a else 0
+        respuestas["p2_a"] = st.selectbox("", opciones_p2_a, index=idx_p2_a, key="p2_a", label_visibility="collapsed")
+        dibujar_feedback("p2_a")
     with col_p2a3:
         st.write("")
     
@@ -507,7 +559,10 @@ with st.container():
     with col_p2b2:
         opciones_p2_b = ["Seleccionar...", datos["p2"]["p2_der_cero"], "(1,8)", "(-1,12)", "(0,0)", "(2,15)"]
         opciones_p2_b = list(dict.fromkeys(opciones_p2_b))
-        respuestas["p2_b"] = st.selectbox("", opciones_p2_b, key="p2_b", label_visibility="collapsed")
+        val_p2_b = st.session_state["respuestas_usuario"].get("p2_b", "Seleccionar...")
+        idx_p2_b = opciones_p2_b.index(val_p2_b) if val_p2_b in opciones_p2_b else 0
+        respuestas["p2_b"] = st.selectbox("", opciones_p2_b, index=idx_p2_b, key="p2_b", label_visibility="collapsed")
+        dibujar_feedback("p2_b")
     with col_p2b3:
         st.write("")
     
@@ -559,7 +614,10 @@ with st.container():
         opt_correct_m = datos["p3"]["exp_m"]
         opciones_p3_a = ["Seleccionar...", opt_correct_m, "5x+3+8/(2x+1)", "8x+4+10/(4x+1)", "6x+4+9/(2x+1)"]
         opciones_p3_a = list(dict.fromkeys(opciones_p3_a))
-        respuestas["p3_a"] = st.selectbox("", opciones_p3_a, key="p3_a", label_visibility="collapsed")
+        val_p3_a = st.session_state["respuestas_usuario"].get("p3_a", "Seleccionar...")
+        idx_p3_a = opciones_p3_a.index(val_p3_a) if val_p3_a in opciones_p3_a else 0
+        respuestas["p3_a"] = st.selectbox("", opciones_p3_a, index=idx_p3_a, key="p3_a", label_visibility="collapsed")
+        dibujar_feedback("p3_a")
     with col_p3a2:
         st.write("")
     
@@ -585,8 +643,18 @@ with st.container():
         opciones_p3_b_pretty = list(mapeo_p3_b.keys())
         opciones_p3_b_pretty = list(dict.fromkeys(opciones_p3_b_pretty))
         
-        seleccion_p3_b = st.selectbox("", opciones_p3_b_pretty, key="p3_b_pretty", label_visibility="collapsed")
+        val_p3_b = st.session_state["respuestas_usuario"].get("p3_b", "Seleccionar...")
+        # Encontrar la opción bonita mapeada que corresponde al valor crudo
+        val_p3_b_pretty = "Seleccionar..."
+        for k, v in mapeo_p3_b.items():
+            if v == val_p3_b:
+                val_p3_b_pretty = k
+                break
+        idx_p3_b = opciones_p3_b_pretty.index(val_p3_b_pretty) if val_p3_b_pretty in opciones_p3_b_pretty else 0
+        
+        seleccion_p3_b = st.selectbox("", opciones_p3_b_pretty, index=idx_p3_b, key="p3_b_pretty", label_visibility="collapsed")
         respuestas["p3_b"] = mapeo_p3_b[seleccion_p3_b]
+        dibujar_feedback("p3_b")
     with col_p3b2:
         st.write("")
     
@@ -598,7 +666,9 @@ with st.container():
     with col_p3c1:
         st.markdown('<div class="inline-text">c) ¿Cuál es la velocidad de la partícula en el instante 5 segundos? (5 puntos)</div>', unsafe_allow_html=True)
     with col_p3c2:
-        respuestas["p3_c"] = st.text_input("", key="p3_c", label_visibility="collapsed")
+        val_p3_c = st.session_state["respuestas_usuario"].get("p3_c", "")
+        respuestas["p3_c"] = st.text_input("", value=val_p3_c, key="p3_c", label_visibility="collapsed")
+        dibujar_feedback("p3_c")
     with col_p3c3:
         st.markdown('<div class="inline-text"> m/s </div>', unsafe_allow_html=True)
     with col_p3c4:
@@ -609,7 +679,9 @@ with st.container():
     with col_p3d1:
         st.markdown('<div class="inline-text">d) ¿Cuál es la aceleración de la partícula cuando han transcurrido 2 segundos? (5 puntos)</div>', unsafe_allow_html=True)
     with col_p3d2:
-        respuestas["p3_d"] = st.text_input("", key="p3_d", label_visibility="collapsed")
+        val_p3_d = st.session_state["respuestas_usuario"].get("p3_d", "")
+        respuestas["p3_d"] = st.text_input("", value=val_p3_d, key="p3_d", label_visibility="collapsed")
+        dibujar_feedback("p3_d")
     with col_p3d3:
         st.markdown('<div class="inline-text"> m/s² </div>', unsafe_allow_html=True)
     with col_p3d4:
@@ -655,7 +727,9 @@ with st.container():
     with col_p4a1:
         st.markdown('<div class="inline-text">La derivada es : </div>', unsafe_allow_html=True)
     with col_p4a2:
-        respuestas["p4_a"] = st.text_input("", key="p4_a", label_visibility="collapsed")
+        val_p4_a = st.session_state["respuestas_usuario"].get("p4_a", "")
+        respuestas["p4_a"] = st.text_input("", value=val_p4_a, key="p4_a", label_visibility="collapsed")
+        dibujar_feedback("p4_a")
     with col_p4a3:
         st.write("")
     
@@ -665,7 +739,9 @@ with st.container():
     with col_p4b1:
         st.markdown('<div class="inline-text">El valor de la pendiente es : </div>', unsafe_allow_html=True)
     with col_p4b2:
-        respuestas["p4_b"] = st.text_input("", key="p4_b", label_visibility="collapsed")
+        val_p4_b = st.session_state["respuestas_usuario"].get("p4_b", "")
+        respuestas["p4_b"] = st.text_input("", value=val_p4_b, key="p4_b", label_visibility="collapsed")
+        dibujar_feedback("p4_b")
     with col_p4b3:
         st.write("")
     
@@ -678,7 +754,10 @@ with st.container():
         opt_dec = datos["p4"]["intervalo_dec"]
         opciones_p4_c = ["Seleccionar...", opt_dec, "]0.5,1.5[", "]-inf,0.9[ U ]2.5,inf[", "]1.7,inf[", "]-8,6["]
         opciones_p4_c = list(dict.fromkeys(opciones_p4_c))
-        respuestas["p4_c"] = st.selectbox("", opciones_p4_c, key="p4_c", label_visibility="collapsed")
+        val_p4_c = st.session_state["respuestas_usuario"].get("p4_c", "Seleccionar...")
+        idx_p4_c = opciones_p4_c.index(val_p4_c) if val_p4_c in opciones_p4_c else 0
+        respuestas["p4_c"] = st.selectbox("", opciones_p4_c, index=idx_p4_c, key="p4_c", label_visibility="collapsed")
+        dibujar_feedback("p4_c")
     with col_p4c3:
         st.write("")
         
@@ -688,7 +767,9 @@ with st.container():
     with col_p4d1:
         st.markdown('<div class="inline-text">El máximo relativo es: </div>', unsafe_allow_html=True)
     with col_p4d2:
-        respuestas["p4_d"] = st.text_input("", key="p4_d", label_visibility="collapsed")
+        val_p4_d = st.session_state["respuestas_usuario"].get("p4_d", "")
+        respuestas["p4_d"] = st.text_input("", value=val_p4_d, key="p4_d", label_visibility="collapsed")
+        dibujar_feedback("p4_d")
     with col_p4d3:
         st.write("")
         
@@ -701,7 +782,10 @@ with st.container():
         opt_conc = datos["p4"]["concava_arriba"]
         opciones_p4_e = ["Seleccionar...", opt_conc, "]1.7,inf[", "]-inf,1.7[", "]0.9,2.5[", "]1.0,inf["]
         opciones_p4_e = list(dict.fromkeys(opciones_p4_e))
-        respuestas["p4_e"] = st.selectbox("", opciones_p4_e, key="p4_e", label_visibility="collapsed")
+        val_p4_e = st.session_state["respuestas_usuario"].get("p4_e", "Seleccionar...")
+        idx_p4_e = opciones_p4_e.index(val_p4_e) if val_p4_e in opciones_p4_e else 0
+        respuestas["p4_e"] = st.selectbox("", opciones_p4_e, index=idx_p4_e, key="p4_e", label_visibility="collapsed")
+        dibujar_feedback("p4_e")
     with col_p4e3:
         st.write("")
         
@@ -713,11 +797,15 @@ with st.container():
     with col_p4f2:
         st.markdown('<div class="inline-text"> ( </div>', unsafe_allow_html=True)
     with col_p4f3:
-        respuestas["p4_fx"] = st.text_input("", key="p4_fx", label_visibility="collapsed")
+        val_p4_fx = st.session_state["respuestas_usuario"].get("p4_fx", "")
+        respuestas["p4_fx"] = st.text_input("", value=val_p4_fx, key="p4_fx", label_visibility="collapsed")
+        dibujar_feedback("p4_fx")
     with col_p4f4:
         st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
     with col_p4f5:
-        respuestas["p4_fy"] = st.text_input("", key="p4_fy", label_visibility="collapsed")
+        val_p4_fy = st.session_state["respuestas_usuario"].get("p4_fy", "")
+        respuestas["p4_fy"] = st.text_input("", value=val_p4_fy, key="p4_fy", label_visibility="collapsed")
+        dibujar_feedback("p4_fy")
     with col_p4f6:
         st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
         
@@ -763,7 +851,9 @@ with st.container():
     with col_p5a1:
         st.markdown('<div class="inline-text">a) El valor de A es : </div>', unsafe_allow_html=True)
     with col_p5a2:
-        respuestas["p5_a"] = st.text_input("", key="p5_a", label_visibility="collapsed")
+        val_p5_a = st.session_state["respuestas_usuario"].get("p5_a", "")
+        respuestas["p5_a"] = st.text_input("", value=val_p5_a, key="p5_a", label_visibility="collapsed")
+        dibujar_feedback("p5_a")
     with col_p5a3:
         st.markdown('<div class="inline-text"> (3 puntos) </div>', unsafe_allow_html=True)
 
@@ -771,7 +861,9 @@ with st.container():
     with col_p5b1:
         st.markdown('<div class="inline-text">b) El valor de B es : </div>', unsafe_allow_html=True)
     with col_p5b2:
-        respuestas["p5_b"] = st.text_input("", key="p5_b", label_visibility="collapsed")
+        val_p5_b = st.session_state["respuestas_usuario"].get("p5_b", "")
+        respuestas["p5_b"] = st.text_input("", value=val_p5_b, key="p5_b", label_visibility="collapsed")
+        dibujar_feedback("p5_b")
     with col_p5b3:
         st.markdown('<div class="inline-text"> (3 puntos) </div>', unsafe_allow_html=True)
 
@@ -779,7 +871,9 @@ with st.container():
     with col_p5c1:
         st.markdown('<div class="inline-text">c) El valor de K es : </div>', unsafe_allow_html=True)
     with col_p5c2:
-        respuestas["p5_k"] = st.text_input("", key="p5_k", label_visibility="collapsed")
+        val_p5_k = st.session_state["respuestas_usuario"].get("p5_k", "")
+        respuestas["p5_k"] = st.text_input("", value=val_p5_k, key="p5_k", label_visibility="collapsed")
+        dibujar_feedback("p5_k")
     with col_p5c3:
         st.markdown('<div class="inline-text"> (3 puntos) </div>', unsafe_allow_html=True)
         
@@ -791,7 +885,10 @@ with st.container():
     with col_p5d2:
         opciones_p5_d = ["Seleccionar...", str(int(datos["p5"]["max_val"])), "270", "300", "200", "250"]
         opciones_p5_d = list(dict.fromkeys(opciones_p5_d))
-        respuestas["p5_d"] = st.selectbox("", opciones_p5_d, key="p5_d", label_visibility="collapsed")
+        val_p5_d = st.session_state["respuestas_usuario"].get("p5_d", "Seleccionar...")
+        idx_p5_d = opciones_p5_d.index(val_p5_d) if val_p5_d in opciones_p5_d else 0
+        respuestas["p5_d"] = st.selectbox("", opciones_p5_d, index=idx_p5_d, key="p5_d", label_visibility="collapsed")
+        dibujar_feedback("p5_d")
     with col_p5d3:
         st.write("")
     
@@ -803,11 +900,15 @@ with st.container():
     with col_p5e2:
         st.markdown('<div class="inline-text"> ( </div>', unsafe_allow_html=True)
     with col_p5e3:
-        respuestas["p5_infx"] = st.text_input("", key="p5_infx", label_visibility="collapsed")
+        val_p5_infx = st.session_state["respuestas_usuario"].get("p5_infx", "")
+        respuestas["p5_infx"] = st.text_input("", value=val_p5_infx, key="p5_infx", label_visibility="collapsed")
+        dibujar_feedback("p5_infx")
     with col_p5e4:
         st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
     with col_p5e5:
-        respuestas["p5_infy"] = st.text_input("", key="p5_infy", label_visibility="collapsed")
+        val_p5_infy = st.session_state["respuestas_usuario"].get("p5_infy", "")
+        respuestas["p5_infy"] = st.text_input("", value=val_p5_infy, key="p5_infy", label_visibility="collapsed")
+        dibujar_feedback("p5_infy")
     with col_p5e6:
         st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
         
@@ -817,7 +918,9 @@ with st.container():
     with col_p5f1:
         st.markdown('<div class="inline-text">La máxima pendiente es : </div>', unsafe_allow_html=True)
     with col_p5f2:
-        respuestas["p5_slope"] = st.text_input("", key="p5_slope", label_visibility="collapsed")
+        val_p5_slope = st.session_state["respuestas_usuario"].get("p5_slope", "")
+        respuestas["p5_slope"] = st.text_input("", value=val_p5_slope, key="p5_slope", label_visibility="collapsed")
+        dibujar_feedback("p5_slope")
     with col_p5f3:
         st.write("")
     
@@ -851,12 +954,30 @@ Se utiliza en la **propagación de epidemias** (donde el número total de contag
 
 # ==================== BOTÓN DE ENVÍO Y CALIFICACIÓN ====================
 st.markdown("---")
-btn_calificar = st.button("📝 Enviar Respuestas y Obtener Nota", type="primary", use_container_width=True)
+
+col_btn1, col_btn2 = st.columns([8, 4])
+with col_btn1:
+    btn_calificar = st.button("📝 Enviar Respuestas y Obtener Nota", type="primary", use_container_width=True, disabled=st.session_state["prueba_enviada"])
+with col_btn2:
+    btn_reiniciar = st.button("🔄 Reiniciar Prueba y Limpiar", type="secondary", use_container_width=True)
+
+if btn_reiniciar:
+    st.session_state["prueba_enviada"] = False
+    st.session_state["respuestas_usuario"] = {}
+    st.session_state["feedback_respuestas"] = {}
+    st.session_state["puntos_obtenidos"] = 0.0
+    st.session_state["nota_final"] = 1.0
+    st.session_state["detalles"] = []
+    st.rerun()
 
 if btn_calificar:
+    # Guardar las respuestas actuales en session_state para la revisión
+    st.session_state["respuestas_usuario"] = respuestas
+    
     # ----------------- PROCESAMIENTO Y EVALUACIÓN -----------------
     puntos_obtenidos = 0.0
     detalles = []
+    feedback = {}
     
     # Pregunta 1
     # a) Coeficientes (4 pts: 1 pt c/u)
@@ -876,11 +997,17 @@ if btn_calificar:
     detalles.append({"Pregunta": "1.a) Coeficiente d", "Estado": "✅" if p1_d_ok else "❌", "Esperado": datos["p1"]["d"], "Ingresado": respuestas["p1_d"], "Puntos": p1_d_pts})
     puntos_obtenidos += (p1_a_pts + p1_b_pts + p1_c_pts + p1_d_pts)
     
+    feedback["p1_a"] = {"ok": p1_a_ok, "ingresado": respuestas["p1_a"], "esperado": datos["p1"]["a"]}
+    feedback["p1_b"] = {"ok": p1_b_ok, "ingresado": respuestas["p1_b"], "esperado": datos["p1"]["b"]}
+    feedback["p1_c"] = {"ok": p1_c_ok, "ingresado": respuestas["p1_c"], "esperado": datos["p1"]["c"]}
+    feedback["p1_d"] = {"ok": p1_d_ok, "ingresado": respuestas["p1_d"], "esperado": datos["p1"]["d"]}
+
     # b) Valores críticos (4 pts)
     p1_crit_ok = respuestas["p1_crit_sel"] == datos["p1"]["valores_criticos_str"]
     p1_crit_pts = 4.0 if p1_crit_ok else 0.0
     puntos_obtenidos += p1_crit_pts
     detalles.append({"Pregunta": "1.b) Valores críticos de f", "Estado": "✅" if p1_crit_ok else "❌", "Esperado": datos["p1"]["valores_criticos_str"], "Ingresado": respuestas["p1_crit_sel"], "Puntos": p1_crit_pts})
+    feedback["p1_crit_sel"] = {"ok": p1_crit_ok, "ingresado": respuestas["p1_crit_sel"], "esperado": datos["p1"]["valores_criticos_str"]}
 
     # c) Mínimo relativo (2 pts: 1 pt c/u)
     min_x_ok, _ = validate_numeric(respuestas["p1_min_x"], datos["p1"]["min_x"])
@@ -889,6 +1016,8 @@ if btn_calificar:
     puntos_obtenidos += p1_min_pts
     detalles.append({"Pregunta": "1.c) Mínimo relativo X", "Estado": "✅" if min_x_ok else "❌", "Esperado": datos["p1"]["min_x"], "Ingresado": respuestas["p1_min_x"], "Puntos": 1.0 if min_x_ok else 0.0})
     detalles.append({"Pregunta": "1.c) Mínimo relativo Y", "Estado": "✅" if min_y_ok else "❌", "Esperado": datos["p1"]["min_y"], "Ingresado": respuestas["p1_min_y"], "Puntos": 1.0 if min_y_ok else 0.0})
+    feedback["p1_min_x"] = {"ok": min_x_ok, "ingresado": respuestas["p1_min_x"], "esperado": datos["p1"]["min_x"]}
+    feedback["p1_min_y"] = {"ok": min_y_ok, "ingresado": respuestas["p1_min_y"], "esperado": datos["p1"]["min_y"]}
 
     # d) Máximo relativo (2 pts: 1 pt c/u)
     max_x_ok, _ = validate_numeric(respuestas["p1_max_x"], datos["p1"]["max_x"])
@@ -897,6 +1026,8 @@ if btn_calificar:
     puntos_obtenidos += p1_max_pts
     detalles.append({"Pregunta": "1.d) Máximo relativo X", "Estado": "✅" if max_x_ok else "❌", "Esperado": datos["p1"]["max_x"], "Ingresado": respuestas["p1_max_x"], "Puntos": 1.0 if max_x_ok else 0.0})
     detalles.append({"Pregunta": "1.d) Máximo relativo Y", "Estado": "✅" if max_y_ok else "❌", "Esperado": datos["p1"]["max_y"], "Ingresado": respuestas["p1_max_y"], "Puntos": 1.0 if max_y_ok else 0.0})
+    feedback["p1_max_x"] = {"ok": max_x_ok, "ingresado": respuestas["p1_max_x"], "esperado": datos["p1"]["max_x"]}
+    feedback["p1_max_y"] = {"ok": max_y_ok, "ingresado": respuestas["p1_max_y"], "esperado": datos["p1"]["max_y"]}
 
     # e) Punto de inflexión (4 pts: 2 pts c/u)
     inf_x_ok, _ = validate_numeric(respuestas["p1_inf_x"], datos["p1"]["inf_x"])
@@ -905,12 +1036,13 @@ if btn_calificar:
     puntos_obtenidos += p1_inf_pts
     detalles.append({"Pregunta": "1.e) Inflexión X", "Estado": "✅" if inf_x_ok else "❌", "Esperado": datos["p1"]["inf_x"], "Ingresado": respuestas["p1_inf_x"], "Puntos": 2.0 if inf_x_ok else 0.0})
     detalles.append({"Pregunta": "1.e) Inflexión Y", "Estado": "✅" if inf_y_ok else "❌", "Esperado": datos["p1"]["inf_y"], "Ingresado": respuestas["p1_inf_y"], "Puntos": 2.0 if inf_y_ok else 0.0})
+    feedback["p1_inf_x"] = {"ok": inf_x_ok, "ingresado": respuestas["p1_inf_x"], "esperado": datos["p1"]["inf_x"]}
+    feedback["p1_inf_y"] = {"ok": inf_y_ok, "ingresado": respuestas["p1_inf_y"], "esperado": datos["p1"]["inf_y"]}
 
-    # f) Intervalo decreciente (4 pts: 2 pts c/u) - Nota: Valida los extremos del intervalo del decremento
+    # f) Intervalo decreciente (4 pts: 2 pts c/u)
     int1_ok, _ = validate_numeric(respuestas["p1_int1"], float(datos["p1"]["valores_criticos"][0]))
     int2_ok, _ = validate_numeric(respuestas["p1_int2"], float(datos["p1"]["valores_criticos"][1]))
     if not (int1_ok and int2_ok):
-        # Intentar al revés
         int1_ok_rev, _ = validate_numeric(respuestas["p1_int1"], float(datos["p1"]["valores_criticos"][1]))
         int2_ok_rev, _ = validate_numeric(respuestas["p1_int2"], float(datos["p1"]["valores_criticos"][0]))
         if int1_ok_rev and int2_ok_rev:
@@ -920,6 +1052,8 @@ if btn_calificar:
     puntos_obtenidos += p1_int_pts
     detalles.append({"Pregunta": "1.f) Intervalo de decremento izquierdo", "Estado": "✅" if int1_ok else "❌", "Esperado": f"Uno de {datos['p1']['valores_criticos']}", "Ingresado": respuestas["p1_int1"], "Puntos": 2.0 if int1_ok else 0.0})
     detalles.append({"Pregunta": "1.f) Intervalo de decremento derecho", "Estado": "✅" if int2_ok else "❌", "Esperado": f"Uno de {datos['p1']['valores_criticos']}", "Ingresado": respuestas["p1_int2"], "Puntos": 2.0 if int2_ok else 0.0})
+    feedback["p1_int1"] = {"ok": int1_ok, "ingresado": respuestas["p1_int1"], "esperado": f"Uno de {datos['p1']['valores_criticos']}"}
+    feedback["p1_int2"] = {"ok": int2_ok, "ingresado": respuestas["p1_int2"], "esperado": f"Uno de {datos['p1']['valores_criticos']}"}
 
     # Pregunta 2
     # a) Primera derivada cero (4 pts)
@@ -927,12 +1061,14 @@ if btn_calificar:
     p2_a_pts = 4.0 if p2_a_ok else 0.0
     puntos_obtenidos += p2_a_pts
     detalles.append({"Pregunta": "2.a) Pto. Primera Derivada Cero", "Estado": "✅" if p2_a_ok else "❌", "Esperado": f"{datos['p2']['p1_der_cero_opt1']} o {datos['p2']['p1_der_cero_opt2']}", "Ingresado": respuestas["p2_a"], "Puntos": p2_a_pts})
+    feedback["p2_a"] = {"ok": p2_a_ok, "ingresado": respuestas["p2_a"], "esperado": f"{datos['p2']['p1_der_cero_opt1']} o {datos['p2']['p1_der_cero_opt2']}"}
     
     # b) Segunda derivada cero (4 pts)
     p2_b_ok = respuestas["p2_b"] == datos["p2"]["p2_der_cero"]
     p2_b_pts = 4.0 if p2_b_ok else 0.0
     puntos_obtenidos += p2_b_pts
     detalles.append({"Pregunta": "2.b) Pto. Segunda Derivada Cero", "Estado": "✅" if p2_b_ok else "❌", "Esperado": datos["p2"]["p2_der_cero"], "Ingresado": respuestas["p2_b"], "Puntos": p2_b_pts})
+    feedback["p2_b"] = {"ok": p2_b_ok, "ingresado": respuestas["p2_b"], "esperado": datos["p2"]["p2_der_cero"]}
 
     # Pregunta 3
     # a) Expresión M(x) (5 pts)
@@ -940,24 +1076,28 @@ if btn_calificar:
     p3_a_pts = 5.0 if p3_a_ok else 0.0
     puntos_obtenidos += p3_a_pts
     detalles.append({"Pregunta": "3.a) Expresión de M(x)", "Estado": "✅" if p3_a_ok else "❌", "Esperado": datos["p3"]["exp_m"], "Ingresado": respuestas["p3_a"], "Puntos": p3_a_pts})
+    feedback["p3_a"] = {"ok": p3_a_ok, "ingresado": respuestas["p3_a"], "esperado": datos["p3"]["exp_m"]}
 
     # b) Expresión f(x) (5 pts)
     p3_b_ok = respuestas["p3_b"] == datos["p3"]["exp_f"]
     p3_b_pts = 5.0 if p3_b_ok else 0.0
     puntos_obtenidos += p3_b_pts
     detalles.append({"Pregunta": "3.b) Expresión f(x)", "Estado": "✅" if p3_b_ok else "❌", "Esperado": datos["p3"]["exp_f"], "Ingresado": respuestas["p3_b"], "Puntos": p3_b_pts})
+    feedback["p3_b"] = {"ok": p3_b_ok, "ingresado": respuestas["p3_b"], "esperado": datos["p3"]["exp_f"]}
 
     # c) Velocidad en t=5 (5 pts)
     p3_c_ok, _ = validate_numeric(respuestas["p3_c"], datos["p3"]["v_5"], tolerance=0.005)
     p3_c_pts = 5.0 if p3_c_ok else 0.0
     puntos_obtenidos += p3_c_pts
     detalles.append({"Pregunta": "3.c) Velocidad en t=5", "Estado": "✅" if p3_c_ok else "❌", "Esperado": datos["p3"]["v_5"], "Ingresado": respuestas["p3_c"], "Puntos": p3_c_pts})
+    feedback["p3_c"] = {"ok": p3_c_ok, "ingresado": respuestas["p3_c"], "esperado": datos["p3"]["v_5"]}
 
     # d) Aceleración en t=2 (5 pts)
     p3_d_ok, _ = validate_numeric(respuestas["p3_d"], datos["p3"]["a_2"], tolerance=0.005)
     p3_d_pts = 5.0 if p3_d_ok else 0.0
     puntos_obtenidos += p3_d_pts
     detalles.append({"Pregunta": "3.d) Aceleración en t=2", "Estado": "✅" if p3_d_ok else "❌", "Esperado": datos["p3"]["a_2"], "Ingresado": respuestas["p3_d"], "Puntos": p3_d_pts})
+    feedback["p3_d"] = {"ok": p3_d_ok, "ingresado": respuestas["p3_d"], "esperado": datos["p3"]["a_2"]}
 
     # Pregunta 4
     # a) Derivada (7 pts)
@@ -965,30 +1105,35 @@ if btn_calificar:
     p4_a_pts = 7.0 if p4_a_ok else 0.0
     puntos_obtenidos += p4_a_pts
     detalles.append({"Pregunta": "4.a) Derivada f'(x)", "Estado": "✅" if p4_a_ok else "❌", "Esperado": datos["p4"]["derivada"], "Ingresado": respuestas["p4_a"], "Puntos": p4_a_pts})
+    feedback["p4_a"] = {"ok": p4_a_ok, "ingresado": respuestas["p4_a"], "esperado": datos["p4"]["derivada"]}
 
     # b) Pendiente en mínimo (5 pts)
     p4_b_ok, _ = validate_numeric(respuestas["p4_b"], datos["p4"]["pendiente_min"])
     p4_b_pts = 5.0 if p4_b_ok else 0.0
     puntos_obtenidos += p4_b_pts
     detalles.append({"Pregunta": "4.b) Pendiente en mínimo", "Estado": "✅" if p4_b_ok else "❌", "Esperado": datos["p4"]["pendiente_min"], "Ingresado": respuestas["p4_b"], "Puntos": p4_b_pts})
+    feedback["p4_b"] = {"ok": p4_b_ok, "ingresado": respuestas["p4_b"], "esperado": datos["p4"]["pendiente_min"]}
 
     # c) Intervalo decreciente (5 pts)
     p4_c_ok = respuestas["p4_c"] == datos["p4"]["intervalo_dec"]
     p4_c_pts = 5.0 if p4_c_ok else 0.0
     puntos_obtenidos += p4_c_pts
     detalles.append({"Pregunta": "4.c) Intervalo Decreciente", "Estado": "✅" if p4_c_ok else "❌", "Esperado": datos["p4"]["intervalo_dec"], "Ingresado": respuestas["p4_c"], "Puntos": p4_c_pts})
+    feedback["p4_c"] = {"ok": p4_c_ok, "ingresado": respuestas["p4_c"], "esperado": datos["p4"]["intervalo_dec"]}
 
     # d) Máximo relativo (5 pts)
     p4_d_ok, _ = validate_numeric(respuestas["p4_d"], datos["p4"]["max_rel"], tolerance=0.1)
     p4_d_pts = 5.0 if p4_d_ok else 0.0
     puntos_obtenidos += p4_d_pts
     detalles.append({"Pregunta": "4.d) Máximo relativo", "Estado": "✅" if p4_d_ok else "❌", "Esperado": datos["p4"]["max_rel"], "Ingresado": respuestas["p4_d"], "Puntos": p4_d_pts})
+    feedback["p4_d"] = {"ok": p4_d_ok, "ingresado": respuestas["p4_d"], "esperado": datos["p4"]["max_rel"]}
 
     # e) Intervalo concavidad (4 pts)
     p4_e_ok = respuestas["p4_e"] == datos["p4"]["concava_arriba"]
     p4_e_pts = 4.0 if p4_e_ok else 0.0
     puntos_obtenidos += p4_e_pts
     detalles.append({"Pregunta": "4.e) Intervalo cóncava arriba", "Estado": "✅" if p4_e_ok else "❌", "Esperado": datos["p4"]["concava_arriba"], "Ingresado": respuestas["p4_e"], "Puntos": p4_e_pts})
+    feedback["p4_e"] = {"ok": p4_e_ok, "ingresado": respuestas["p4_e"], "esperado": datos["p4"]["concava_arriba"]}
 
     # f) Punto de pendiente mínima (4 pts: 2 pts c/u)
     p4_fx_ok, _ = validate_numeric(respuestas["p4_fx"], datos["p4"]["punto_min_pen_x"])
@@ -997,6 +1142,8 @@ if btn_calificar:
     puntos_obtenidos += p4_f_pts
     detalles.append({"Pregunta": "4.f) Punto Pendiente Mínima X", "Estado": "✅" if p4_fx_ok else "❌", "Esperado": datos["p4"]["punto_min_pen_x"], "Ingresado": respuestas["p4_fx"], "Puntos": 2.0 if p4_fx_ok else 0.0})
     detalles.append({"Pregunta": "4.f) Punto Pendiente Mínima Y", "Estado": "✅" if p4_fy_ok else "❌", "Esperado": datos["p4"]["punto_min_pen_y"], "Ingresado": respuestas["p4_fy"], "Puntos": 2.0 if p4_fy_ok else 0.0})
+    feedback["p4_fx"] = {"ok": p4_fx_ok, "ingresado": respuestas["p4_fx"], "esperado": datos["p4"]["punto_min_pen_x"]}
+    feedback["p4_fy"] = {"ok": p4_fy_ok, "ingresado": respuestas["p4_fy"], "esperado": datos["p4"]["punto_min_pen_y"]}
 
     # Pregunta 5
     # a) Valor A (3 pts)
@@ -1004,24 +1151,28 @@ if btn_calificar:
     p5_a_pts = 3.0 if p5_a_ok else 0.0
     puntos_obtenidos += p5_a_pts
     detalles.append({"Pregunta": "5.a) Deslizador A", "Estado": "✅" if p5_a_ok else "❌", "Esperado": datos["p5"]["A"], "Ingresado": respuestas["p5_a"], "Puntos": p5_a_pts})
+    feedback["p5_a"] = {"ok": p5_a_ok, "ingresado": respuestas["p5_a"], "esperado": datos["p5"]["A"]}
 
     # b) Valor B (3 pts)
     p5_b_ok, _ = validate_numeric(respuestas["p5_b"], datos["p5"]["B"], tolerance=2.0)
     p5_b_pts = 3.0 if p5_b_ok else 0.0
     puntos_obtenidos += p5_b_pts
     detalles.append({"Pregunta": "5.b) Deslizador B", "Estado": "✅" if p5_b_ok else "❌", "Esperado": datos["p5"]["B"], "Ingresado": respuestas["p5_b"], "Puntos": p5_b_pts})
+    feedback["p5_b"] = {"ok": p5_b_ok, "ingresado": respuestas["p5_b"], "esperado": datos["p5"]["B"]}
 
     # c) Valor K (3 pts)
     p5_k_ok, _ = validate_numeric(respuestas["p5_k"], datos["p5"]["K"], tolerance=0.03)
     p5_k_pts = 3.0 if p5_k_ok else 0.0
     puntos_obtenidos += p5_k_pts
     detalles.append({"Pregunta": "5.c) Deslizador K", "Estado": "✅" if p5_k_ok else "❌", "Esperado": datos["p5"]["K"], "Ingresado": respuestas["p5_k"], "Puntos": p5_k_pts})
+    feedback["p5_k"] = {"ok": p5_k_ok, "ingresado": respuestas["p5_k"], "esperado": datos["p5"]["K"]}
 
     # d) Valor máximo C(x) (5 pts)
     p5_d_ok = respuestas["p5_d"] == str(int(datos["p5"]["max_val"]))
     p5_d_pts = 5.0 if p5_d_ok else 0.0
     puntos_obtenidos += p5_d_pts
     detalles.append({"Pregunta": "5.d) Máximo valor C(x)", "Estado": "✅" if p5_d_ok else "❌", "Esperado": str(int(datos["p5"]["max_val"])), "Ingresado": respuestas["p5_d"], "Puntos": p5_d_pts})
+    feedback["p5_d"] = {"ok": p5_d_ok, "ingresado": respuestas["p5_d"], "esperado": datos["p5"]["max_val"]}
 
     # e) Punto de inflexión (6 pts: 3 pts c/u)
     p5_infx_ok, _ = validate_numeric(respuestas["p5_infx"], datos["p5"]["inf_x"], tolerance=0.05)
@@ -1030,19 +1181,36 @@ if btn_calificar:
     puntos_obtenidos += p5_inf_pts
     detalles.append({"Pregunta": "5.e) Inflexión X", "Estado": "✅" if p5_infx_ok else "❌", "Esperado": datos["p5"]["inf_x"], "Ingresado": respuestas["p5_infx"], "Puntos": 3.0 if p5_infx_ok else 0.0})
     detalles.append({"Pregunta": "5.e) Inflexión Y", "Estado": "✅" if p5_infy_ok else "❌", "Esperado": datos["p5"]["inf_y"], "Ingresado": respuestas["p5_infy"], "Puntos": 3.0 if p5_infy_ok else 0.0})
+    feedback["p5_infx"] = {"ok": p5_infx_ok, "ingresado": respuestas["p5_infx"], "esperado": datos["p5"]["inf_x"]}
+    feedback["p5_infy"] = {"ok": p5_infy_ok, "ingresado": respuestas["p5_infy"], "esperado": datos["p5"]["inf_y"]}
 
     # f) Máxima pendiente (5 pts)
     p5_slope_ok, _ = validate_numeric(respuestas["p5_slope"], datos["p5"]["max_slope"], tolerance=0.5)
     p5_slope_pts = 5.0 if p5_slope_ok else 0.0
     puntos_obtenidos += p5_slope_pts
     detalles.append({"Pregunta": "5.f) Máxima pendiente", "Estado": "✅" if p5_slope_ok else "❌", "Esperado": datos["p5"]["max_slope"], "Ingresado": respuestas["p5_slope"], "Puntos": p5_slope_pts})
+    feedback["p5_slope"] = {"ok": p5_slope_ok, "ingresado": respuestas["p5_slope"], "esperado": datos["p5"]["max_slope"]}
 
     # Calcular Calificación Final
     max_puntos = 103.0
     nota_final = calcular_nota(puntos_obtenidos, max_puntos, exigencia)
     
-    # ----------------- RENDERIZAR RESULTADOS -----------------
+    # Persistir en session_state
+    st.session_state["puntos_obtenidos"] = puntos_obtenidos
+    st.session_state["detalles"] = detalles
+    st.session_state["feedback_respuestas"] = feedback
+    st.session_state["nota_final"] = nota_final
+    st.session_state["prueba_enviada"] = True
+    st.rerun()
+
+# ----------------- RENDERIZAR RESULTADOS PERSISTENTES -----------------
+if st.session_state["prueba_enviada"]:
     st.markdown("## 📊 Calificación e Informe de Resultados")
+    
+    max_puntos = 103.0
+    puntos_obtenidos = st.session_state["puntos_obtenidos"]
+    nota_final = st.session_state["nota_final"]
+    detalles = st.session_state["detalles"]
     
     col_res1, col_res2, col_res3 = st.columns(3)
     
@@ -1071,13 +1239,13 @@ if btn_calificar:
         puntaje_min_aprobacion = exigencia * max_puntos
         st.markdown(f"**Puntaje Mínimo para 4.0:** {puntaje_min_aprobacion:.1f} Pts")
         st.markdown('</div>', unsafe_allow_html=True)
-
+ 
     if nota_final >= 4.0:
         st.balloons()
         st.success("¡Felicidades! Has aprobado la evaluación con éxito.")
     else:
         st.error("No has alcanzado la nota mínima de aprobación (4.0). ¡Sigue practicando!")
-
+ 
     # Mostrar la tabla de detalles
     st.markdown("### 📋 Desglose Detallado por Pregunta")
     df_detalles = pd.DataFrame(detalles)
