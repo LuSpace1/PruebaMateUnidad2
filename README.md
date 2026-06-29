@@ -13,17 +13,17 @@ Esta es una aplicación web interactiva desarrollada en Python con Streamlit par
 
 * app.py: Código principal de la aplicación Streamlit.
 * test_validation.py: Script para comprobar la lógica de evaluación de respuestas.
-* iniciar_prueba.bat: Ejecutable para inicializar el entorno y correr la app en Windows de forma automatizada.
+* iniciar_prueba.bat: Ejecutable para Windows que realiza de forma 100% automática la creación del entorno virtual, la instalación de dependencias y la ejecución de la app.
 * requirements.txt: Archivo de dependencias del proyecto.
 * .gitignore: Configuración para excluir archivos del entorno virtual en Git.
 
 ## Instalación y Uso
 
-### Windows (Inicio Rápido)
+### Windows (Inicio Rápido Todo en Uno)
 
-1. Descargue o clone este repositorio.
-2. Ejecute el archivo iniciar_prueba.bat haciendo doble clic en él.
-3. Se creará el entorno virtual local de forma automática, se instalarán las dependencias del archivo requirements.txt e iniciará la aplicación en el navegador web.
+1. Descargue o clone este repositorio en su computadora.
+2. Haga doble clic en el archivo iniciar_prueba.bat.
+3. El archivo automatizado se encargará de todo: detectará su instalación de Python/uv, creará el entorno virtual local .venv de forma aislada, instalará las dependencias necesarias de requirements.txt y abrirá la aplicación interactiva directamente en su navegador web listo para usar.
 
 ### Instalación Manual con uv (Recomendado)
 
