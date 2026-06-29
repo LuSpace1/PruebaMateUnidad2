@@ -485,7 +485,8 @@ with st.container():
     st.markdown('<div class="question-title">PUNTOS DE DERIVADA CERO (8 Puntos)</div>', unsafe_allow_html=True)
     
     # a) Primera derivada cero
-    st.markdown(f'<div class="subquestion-title">a) ¿En cuál punto de la gráfica de f(x) = {datos["p2"]["función_latex"].split("=")[1]} la función f tiene la primera derivada igual a 0?</div>', unsafe_allow_html=True)
+    función_p2_pretty = datos["p2"]["función_latex"].split("=")[1].replace("^3", "³").replace("^2", "²").strip()
+    st.markdown(f'<div class="subquestion-title">a) ¿En cuál punto de la gráfica de f(x) = {función_p2_pretty} la función f tiene la primera derivada igual a 0?</div>', unsafe_allow_html=True)
     col_p2a1, col_p2a2, col_p2a3 = st.columns([1.5, 2, 8.5], vertical_alignment="center")
     with col_p2a1:
         st.markdown('<div class="inline-text">En el punto : </div>', unsafe_allow_html=True)
@@ -499,7 +500,7 @@ with st.container():
         st.write("")
     
     # b) Segunda derivada cero
-    st.markdown(f'<div class="subquestion-title">b) ¿En cuál punto de la gráfica de f(x) = {datos["p2"]["función_latex"].split("=")[1]} la función f tiene la segunda derivada igual a 0?</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="subquestion-title">b) ¿En cuál punto de la gráfica de f(x) = {función_p2_pretty} la función f tiene la segunda derivada igual a 0?</div>', unsafe_allow_html=True)
     col_p2b1, col_p2b2, col_p2b3 = st.columns([1.5, 2, 8.5], vertical_alignment="center")
     with col_p2b1:
         st.markdown('<div class="inline-text">En el punto : </div>', unsafe_allow_html=True)
@@ -567,15 +568,25 @@ with st.container():
     col_p3b1, col_p3b2 = st.columns([4, 8], vertical_alignment="center")
     with col_p3b1:
         opt_f_correcta = datos["p3"]["exp_f"]
-        opciones_p3_b = [
-            "Seleccionar...",
+        opciones_p3_b_raw = [
             opt_f_correcta,
             "3x^2+4x+3ln(3x+1)+C",
             "2.5x^2+3x+4ln(2x+1)+C",
             "4x^2+4x+2.5ln(4x+1)+C"
         ]
-        opciones_p3_b = list(dict.fromkeys(opciones_p3_b))
-        respuestas["p3_b"] = st.selectbox("", opciones_p3_b, key="p3_b", label_visibility="collapsed")
+        mapeo_p3_b = {
+            "Seleccionar...": "Seleccionar..."
+        }
+        for opt in opciones_p3_b_raw:
+            pretty_opt = opt.replace("^2", "²").replace("ln", " ln").replace("+C", " + C")
+            pretty_opt = pretty_opt.replace("3x²", "3x² ").replace("2.5x²", "2.5x² ").replace("4x²", "4x² ")
+            pretty_opt = pretty_opt.replace("+4x+", " + 4x + ").replace("+3x+", " + 3x + ")
+            mapeo_p3_b[pretty_opt] = opt
+        opciones_p3_b_pretty = list(mapeo_p3_b.keys())
+        opciones_p3_b_pretty = list(dict.fromkeys(opciones_p3_b_pretty))
+        
+        seleccion_p3_b = st.selectbox("", opciones_p3_b_pretty, key="p3_b_pretty", label_visibility="collapsed")
+        respuestas["p3_b"] = mapeo_p3_b[seleccion_p3_b]
     with col_p3b2:
         st.write("")
     
