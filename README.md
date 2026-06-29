@@ -56,3 +56,12 @@ Esta es una aplicación web interactiva desarrollada en Python con Streamlit par
 
 4. Ejecutar la aplicación:
    streamlit run app.py
+
+## Desarrollo y Pruebas
+
+Para validar la lógica de evaluación y comprobar que las respuestas correctas se califiquen con puntaje máximo, puede ejecutar las pruebas locales con:
+
+```bash
+python test_validation.py
+```
+
