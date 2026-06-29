@@ -537,17 +537,22 @@ En **economía y optimización de negocios**, el punto donde la primera derivada
 with st.container():
     st.markdown('<div class="question-box">', unsafe_allow_html=True)
     st.markdown('<div class="question-title">FUNCIÓN DESCONOCIDA (20 PUNTOS)</div>', unsafe_allow_html=True)
-    st.write("La posición de una partícula está representada por una función $f$ desconocida.")
-    st.write("La tabla adjunta muestra la pendiente $M(x)$ de la recta tangente a $f$ para algunos valores de $x$:")
+    st.write("La posición de una partícula está representada por una función f desconocida.")
+    st.write("La tabla adjunta muestra la pendiente M(x) de la recta tangente a f para algunos valores de x:")
     
-    # Crear DataFrame para la tabla
-    df_p3 = pd.DataFrame(datos["p3"]["tabla"])
-    st.table(df_p3.set_index("x").T)
+    col_tab1, col_tab2 = st.columns([3, 9])
+    with col_tab1:
+        tabla_md = "| $x$ | $M(x)$ |\n| :---: | :---: |\n"
+        for fila in datos["p3"]["tabla"]:
+            tabla_md += f"| {fila['x']} | ${fila['m']}$ |\n"
+        st.markdown(tabla_md)
+    with col_tab2:
+        st.write("")
     
-    st.write("Sabiendo que $M(x) = f'(x)$, conteste:")
+    st.write("Sabiendo que M(x) = f'(x), conteste:")
     
     # a) Dropdown
-    st.markdown('<div class="subquestion-title">a) ¿Cuál es la expresión algebraica que modela la pendiente $M(x)$? (5 puntos)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="subquestion-title">a) ¿Cuál es la expresión algebraica que modela la pendiente M(x)? (5 puntos)</div>', unsafe_allow_html=True)
     col_p3a1, col_p3a2 = st.columns([4, 8], vertical_alignment="center")
     with col_p3a1:
         opt_correct_m = datos["p3"]["exp_m"]
