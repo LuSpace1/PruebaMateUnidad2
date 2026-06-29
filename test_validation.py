@@ -36,10 +36,10 @@ datos = {
     "p1": {
         "a": -4.0, "b": -12.0, "c": 576.0, "d": 350.0,
         "valores_criticos": ["-8", "6"],
+        "valores_criticos_str": "6 y -8",
         "min_x": -8.0, "min_y": -2978.0,
         "max_x": 6.0, "max_y": 2510.0,
-        "inf_x": -1.0, "inf_y": -234.0,
-        "intervalo_creciente": "]-8,6["
+        "inf_x": -1.0, "inf_y": -234.0
     },
     "p2": {
         "p1_der_cero_opt1": "(1,8)", "p1_der_cero_opt2": "(-1,12)",
@@ -74,15 +74,15 @@ respuestas_usuario = {
     "p1_b": " -12 ",
     "p1_c": "576,0", # usando coma decimal
     "p1_d": "350",
-    "p1_crit1": " 6 ",
-    "p1_crit2": "-8",
+    "p1_crit_sel": "6 y -8",
     "p1_min_x": "-8",
     "p1_min_y": "-2978",
     "p1_max_x": "6",
     "p1_max_y": "2510",
     "p1_inf_x": "-1",
     "p1_inf_y": "-234",
-    "p1_intervalo": " ] -8 , 6 [ ", # espacios y comas
+    "p1_int1": "-8",
+    "p1_int2": "6",
     
     # Pregunta 2
     "p2_a": "(1,8)",
@@ -122,25 +122,31 @@ def evaluar_prueba():
     puntos += 1.0 if validate_numeric(respuestas_usuario["p1_c"], datos["p1"]["c"])[0] else 0.0
     puntos += 1.0 if validate_numeric(respuestas_usuario["p1_d"], datos["p1"]["d"])[0] else 0.0
     
-    crit1_ok, _ = validate_numeric(respuestas_usuario["p1_crit1"], float(datos["p1"]["valores_criticos"][0]))
-    crit2_ok, _ = validate_numeric(respuestas_usuario["p1_crit2"], float(datos["p1"]["valores_criticos"][1]))
-    if not (crit1_ok and crit2_ok):
-        crit1_ok_rev, _ = validate_numeric(respuestas_usuario["p1_crit1"], float(datos["p1"]["valores_criticos"][1]))
-        crit2_ok_rev, _ = validate_numeric(respuestas_usuario["p1_crit2"], float(datos["p1"]["valores_criticos"][0]))
-        if crit1_ok_rev and crit2_ok_rev:
-            crit1_ok, crit2_ok = True, True
-    puntos += 2.0 if crit1_ok else 0.0
-    puntos += 2.0 if crit2_ok else 0.0
+    # b) Valores críticos (4 pts)
+    puntos += 4.0 if respuestas_usuario["p1_crit_sel"] == datos["p1"]["valores_criticos_str"] else 0.0
     
+    # c) Mínimo relativo (2 pts)
     puntos += 1.0 if validate_numeric(respuestas_usuario["p1_min_x"], datos["p1"]["min_x"])[0] else 0.0
     puntos += 1.0 if validate_numeric(respuestas_usuario["p1_min_y"], datos["p1"]["min_y"])[0] else 0.0
+    
+    # d) Máximo relativo (2 pts)
     puntos += 1.0 if validate_numeric(respuestas_usuario["p1_max_x"], datos["p1"]["max_x"])[0] else 0.0
     puntos += 1.0 if validate_numeric(respuestas_usuario["p1_max_y"], datos["p1"]["max_y"])[0] else 0.0
     
+    # e) Inflexión (4 pts)
     puntos += 2.0 if validate_numeric(respuestas_usuario["p1_inf_x"], datos["p1"]["inf_x"])[0] else 0.0
     puntos += 2.0 if validate_numeric(respuestas_usuario["p1_inf_y"], datos["p1"]["inf_y"])[0] else 0.0
     
-    puntos += 4.0 if validate_string(respuestas_usuario["p1_intervalo"], datos["p1"]["intervalo_creciente"]) else 0.0
+    # f) Intervalo decremento (4 pts)
+    int1_ok, _ = validate_numeric(respuestas_usuario["p1_int1"], float(datos["p1"]["valores_criticos"][0]))
+    int2_ok, _ = validate_numeric(respuestas_usuario["p1_int2"], float(datos["p1"]["valores_criticos"][1]))
+    if not (int1_ok and int2_ok):
+        int1_ok_rev, _ = validate_numeric(respuestas_usuario["p1_int1"], float(datos["p1"]["valores_criticos"][1]))
+        int2_ok_rev, _ = validate_numeric(respuestas_usuario["p1_int2"], float(datos["p1"]["valores_criticos"][0]))
+        if int1_ok_rev and int2_ok_rev:
+            int1_ok, int2_ok = True, True
+    puntos += 2.0 if int1_ok else 0.0
+    puntos += 2.0 if int2_ok else 0.0
     
     # Pregunta 2 (8 pts)
     p2_a_ok = (respuestas_usuario["p2_a"] == datos["p2"]["p1_der_cero_opt1"]) or (respuestas_usuario["p2_a"] == datos["p2"]["p1_der_cero_opt2"])

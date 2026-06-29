@@ -61,7 +61,8 @@ st.markdown("""
     .subquestion-title {
         font-weight: 500;
         color: var(--text-color, #334155);
-        margin-top: 10px;
+        margin-top: 15px;
+        margin-bottom: 8px;
     }
     .chilean-nota {
         font-size: 3rem;
@@ -88,6 +89,16 @@ st.markdown("""
         padding: 15px;
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+    /* Estilo para alinear verticalmente textos fijos con inputs */
+    .inline-text {
+        font-size: 1rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        margin-top: 0px;
+        padding-top: 4px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -131,6 +142,7 @@ VARIACIONES = {
             "puntos_enunciado": "A = (-4, -1890), B = (-2, -818), C = (0, 350) \\text{ y } D = (5, 2430)",
             "a": -4.0, "b": -12.0, "c": 576.0, "d": 350.0,
             "valores_criticos": ["-8", "6"],
+            "valores_criticos_str": "6 y -8",
             "min_x": -8.0, "min_y": -2978.0,
             "max_x": 6.0, "max_y": 2510.0,
             "inf_x": -1.0, "inf_y": -234.0,
@@ -187,6 +199,7 @@ VARIACIONES = {
             "puntos_enunciado": "A = (-3, -232), B = (-2, -96), C = (0, 200) \\text{ y } D = (3, 524)",
             "a": -2.0, "b": -6.0, "c": 144.0, "d": 200.0,
             "valores_criticos": ["-6", "4"],
+            "valores_criticos_str": "4 y -6",
             "min_x": -6.0, "min_y": -448.0,
             "max_x": 4.0, "max_y": 552.0,
             "inf_x": -1.0, "inf_y": 52.0,
@@ -243,6 +256,7 @@ VARIACIONES = {
             "puntos_enunciado": "A = (-4, -1112), B = (-2, -542), C = (0, 100) \\text{ y } D = (4, 1024)",
             "a": -3.0, "b": -9.0, "c": 315.0, "d": 100.0,
             "valores_criticos": ["-7", "5"],
+            "valores_criticos_str": "5 y -7",
             "min_x": -7.0, "min_y": -1517.0,
             "max_x": 5.0, "max_y": 1075.0,
             "inf_x": -1.0, "inf_y": -221.0,
@@ -336,51 +350,107 @@ st.write(f"### Estás rindiendo la **{variacion_sel}** (Puntaje Máximo: 103 Pun
 # ==================== PREGUNTA 1 ====================
 with st.container():
     st.markdown('<div class="question-box">', unsafe_allow_html=True)
-    st.markdown('<div class="question-title">1. ESTUDIO DE UNA FUNCIÓN DESCONOCIDA (20 Puntos)</div>', unsafe_allow_html=True)
-    st.write(f"La gráfica de una función $f$ desconocida de grado 3 (cúbica) pasa por los siguientes puntos:")
+    st.markdown('<div class="question-title">ESTUDIO DE UNA FUNCIÓN DESCONOCIDA (20 puntos)</div>', unsafe_allow_html=True)
+    st.write(f"La gráfica de una función $f$ desconocida de grado 3 (cúbica) pasa por los siguientes puntos :")
     st.latex(datos["p1"]["puntos_enunciado"])
     st.write("Conteste:")
     
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        respuestas["p1_a"] = st.text_input("Coef. a ($x^3$):", key="p1_a", placeholder="Ej: -4")
-    with col2:
-        respuestas["p1_b"] = st.text_input("Coef. b ($x^2$):", key="p1_b", placeholder="Ej: -12")
-    with col3:
-        respuestas["p1_c"] = st.text_input("Coef. c ($x$):", key="p1_c", placeholder="Ej: 576")
-    with col4:
-        respuestas["p1_d"] = st.text_input("Coef. d (const.):", key="p1_d", placeholder="Ej: 350")
+    # a) Modelo en una sola línea horizontal
+    st.markdown('<div class="subquestion-title">a) ¿Cuál es el modelo de la función $f$ ? (4 puntos)</div>', unsafe_allow_html=True)
+    col_a1, col_a2, col_a3, col_a4, col_a5, col_a6, col_a7, col_a8, col_a9 = st.columns([2.2, 1.2, 0.8, 1.2, 0.8, 1.2, 0.8, 1.2, 3], vertical_alignment="center")
+    with col_a1:
+        st.markdown('<div class="inline-text">La función $f$ es = </div>', unsafe_allow_html=True)
+    with col_a2:
+        respuestas["p1_a"] = st.text_input("", key="p1_a", label_visibility="collapsed")
+    with col_a3:
+        st.markdown('<div class="inline-text"> $x^3$ + </div>', unsafe_allow_html=True)
+    with col_a4:
+        respuestas["p1_b"] = st.text_input("", key="p1_b", label_visibility="collapsed")
+    with col_a5:
+        st.markdown('<div class="inline-text"> $x^2$ + </div>', unsafe_allow_html=True)
+    with col_a6:
+        respuestas["p1_c"] = st.text_input("", key="p1_c", label_visibility="collapsed")
+    with col_a7:
+        st.markdown('<div class="inline-text"> $x$ + </div>', unsafe_allow_html=True)
+    with col_a8:
+        respuestas["p1_d"] = st.text_input("", key="p1_d", label_visibility="collapsed")
+    with col_a9:
+        st.write("")
         
-    st.markdown('<div class="subquestion-title">b) ¿Cuáles son los valores críticos de $f$? (4 Puntos)</div>', unsafe_allow_html=True)
-    col_crit1, col_crit2 = st.columns(2)
-    with col_crit1:
-        respuestas["p1_crit1"] = st.text_input("Primer valor crítico:", key="p1_crit1", placeholder="Ej: 6")
-    with col_crit2:
-        respuestas["p1_crit2"] = st.text_input("Segundo valor crítico:", key="p1_crit2", placeholder="Ej: -8")
-        
-    st.markdown('<div class="subquestion-title">c) ¿Cuál es el punto mínimo relativo? (2 Puntos)</div>', unsafe_allow_html=True)
-    col_min_x, col_min_y = st.columns(2)
-    with col_min_x:
-        respuestas["p1_min_x"] = st.text_input("Mínimo relativo (Coordenada X):", key="p1_min_x", placeholder="Ej: -8")
-    with col_min_y:
-        respuestas["p1_min_y"] = st.text_input("Mínimo relativo (Coordenada Y):", key="p1_min_y", placeholder="Ej: -2978")
+    # b) Valores críticos en una línea horizontal
+    st.markdown('<div class="subquestion-title">b) ¿Cuáles son los valores críticos de $f$ ? (4 puntos)</div>', unsafe_allow_html=True)
+    col_b1, col_b2, col_b3 = st.columns([3, 2, 7], vertical_alignment="center")
+    with col_b1:
+        st.markdown('<div class="inline-text">Los valores críticos son : </div>', unsafe_allow_html=True)
+    with col_b2:
+        correct_crit_str = datos["p1"]["valores_criticos_str"]
+        opciones_b = ["Seleccionar...", correct_crit_str, "4 y -6", "5 y -7", "6 y 8", "-6 y 8"]
+        opciones_b = list(dict.fromkeys(opciones_b))
+        respuestas["p1_crit_sel"] = st.selectbox("", opciones_b, key="p1_crit_sel", label_visibility="collapsed")
+    with col_b3:
+        st.write("")
 
-    st.markdown('<div class="subquestion-title">d) ¿Cuál es el punto máximo relativo? (2 Puntos)</div>', unsafe_allow_html=True)
-    col_max_x, col_max_y = st.columns(2)
-    with col_max_x:
-        respuestas["p1_max_x"] = st.text_input("Máximo relativo (Coordenada X):", key="p1_max_x", placeholder="Ej: 6")
-    with col_max_y:
-        respuestas["p1_max_y"] = st.text_input("Máximo relativo (Coordenada Y):", key="p1_max_y", placeholder="Ej: 2510")
+    # c) Mínimo relativo
+    st.markdown('<div class="subquestion-title">c) ¿Cuál es el punto mínimo relativo? (2 puntos)</div>', unsafe_allow_html=True)
+    col_c1, col_c2, col_c3, col_c4, col_c5, col_c6 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 5.4], vertical_alignment="center")
+    with col_c1:
+        st.markdown('<div class="inline-text">El punto mínimo relativo es : </div>', unsafe_allow_html=True)
+    with col_c2:
+        st.markdown('<div class="inline-text"> ( </div>', unsafe_allow_html=True)
+    with col_c3:
+        respuestas["p1_min_x"] = st.text_input("", key="p1_min_x", label_visibility="collapsed")
+    with col_c4:
+        st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
+    with col_c5:
+        respuestas["p1_min_y"] = st.text_input("", key="p1_min_y", label_visibility="collapsed")
+    with col_c6:
+        st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="subquestion-title">e) ¿Cuál es el punto de inflexión de $f$? (4 Puntos)</div>', unsafe_allow_html=True)
-    col_inf_x, col_inf_y = st.columns(2)
-    with col_inf_x:
-        respuestas["p1_inf_x"] = st.text_input("Inflexión (Coordenada X):", key="p1_inf_x", placeholder="Ej: -1")
-    with col_inf_y:
-        respuestas["p1_inf_y"] = st.text_input("Inflexión (Coordenada Y):", key="p1_inf_y", placeholder="Ej: -234")
+    # d) Máximo relativo
+    st.markdown('<div class="subquestion-title">d) ¿Cuál es el punto máximo relativo? (2 puntos)</div>', unsafe_allow_html=True)
+    col_d1, col_d2, col_d3, col_d4, col_d5, col_d6 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 5.4], vertical_alignment="center")
+    with col_d1:
+        st.markdown('<div class="inline-text">El punto máximo relativo es : </div>', unsafe_allow_html=True)
+    with col_d2:
+        st.markdown('<div class="inline-text"> ( </div>', unsafe_allow_html=True)
+    with col_d3:
+        respuestas["p1_max_x"] = st.text_input("", key="p1_max_x", label_visibility="collapsed")
+    with col_d4:
+        st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
+    with col_d5:
+        respuestas["p1_max_y"] = st.text_input("", key="p1_max_y", label_visibility="collapsed")
+    with col_d6:
+        st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="subquestion-title">f) ¿En cuál intervalo $f$ es creciente? (4 Puntos)</div>', unsafe_allow_html=True)
-    respuestas["p1_intervalo"] = st.text_input("Intervalo (ej: ]-8,6[ o (-8,6)):", key="p1_intervalo", placeholder="Ej: ]-8,6[")
+    # e) Punto de inflexión
+    st.markdown('<div class="subquestion-title">e) ¿Cuál es el punto de inflexión de $f$ ? (4 puntos)</div>', unsafe_allow_html=True)
+    col_e1, col_e2, col_e3, col_e4, col_e5, col_e6 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 5.4], vertical_alignment="center")
+    with col_e1:
+        st.markdown('<div class="inline-text">El punto de inflexión es : </div>', unsafe_allow_html=True)
+    with col_e2:
+        st.markdown('<div class="inline-text"> ( </div>', unsafe_allow_html=True)
+    with col_e3:
+        respuestas["p1_inf_x"] = st.text_input("", key="p1_inf_x", label_visibility="collapsed")
+    with col_e4:
+        st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
+    with col_e5:
+        respuestas["p1_inf_y"] = st.text_input("", key="p1_inf_y", label_visibility="collapsed")
+    with col_e6:
+        st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
+
+    # f) Intervalo creciente/decreciente
+    st.markdown('<div class="subquestion-title">f) ¿En cuál intervalo $f$ es creciente? (4 puntos)</div>', unsafe_allow_html=True)
+    col_f1, col_f2, col_f3, col_f4, col_f5 = st.columns([4, 1.5, 0.3, 1.5, 4.7], vertical_alignment="center")
+    with col_f1:
+        st.markdown('<div class="inline-text"> $f$ es decreciente en el intervalo ] </div>', unsafe_allow_html=True)
+    with col_f2:
+        respuestas["p1_int1"] = st.text_input("", key="p1_int1", label_visibility="collapsed")
+    with col_f3:
+        st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
+    with col_f4:
+        respuestas["p1_int2"] = st.text_input("", key="p1_int2", label_visibility="collapsed")
+    with col_f5:
+        st.markdown('<div class="inline-text"> [ </div>', unsafe_allow_html=True)
     
     # AYUDANTE DE PREGUNTA 1
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
@@ -408,19 +478,33 @@ with st.container():
 # ==================== PREGUNTA 2 ====================
 with st.container():
     st.markdown('<div class="question-box">', unsafe_allow_html=True)
-    st.markdown('<div class="question-title">2. PUNTOS DE DERIVADA CERO (8 Puntos)</div>', unsafe_allow_html=True)
-    st.write("Considere la función:")
-    st.latex(datos["p2"]["función_latex"])
+    st.markdown('<div class="question-title">PUNTOS DE DERIVADA CERO (8 Puntos)</div>', unsafe_allow_html=True)
     
-    st.markdown('<div class="subquestion-title">a) ¿En cuál punto de la gráfica la función $f$ tiene la primera derivada igual a 0? (4 Puntos)</div>', unsafe_allow_html=True)
-    opt_der1_1 = datos["p2"]["p1_der_cero_opt1"]
-    opt_der1_2 = datos["p2"]["p1_der_cero_opt2"]
-    opciones_p2_a = ["Seleccionar...", opt_der1_1, opt_der1_2, "(0,10)", "(1,12)", "(-1,8)"]
-    respuestas["p2_a"] = st.selectbox("Seleccione el punto:", opciones_p2_a, key="p2_a")
+    # a) Primera derivada cero
+    st.markdown(f'<div class="subquestion-title">a) ¿En cuál punto de la gráfica de $f(x) = {datos["p2"]["función_latex"].split("=")[1]}$ la función $f$ tiene la primera derivada igual a 0?</div>', unsafe_allow_html=True)
+    col_p2a1, col_p2a2, col_p2a3 = st.columns([1.5, 2, 8.5], vertical_alignment="center")
+    with col_p2a1:
+        st.markdown('<div class="inline-text">En el punto : </div>', unsafe_allow_html=True)
+    with col_p2a2:
+        opt_der1_1 = datos["p2"]["p1_der_cero_opt1"]
+        opt_der1_2 = datos["p2"]["p1_der_cero_opt2"]
+        opciones_p2_a = ["Seleccionar...", opt_der1_1, opt_der1_2, "(0,10)", "(1,12)", "(-1,8)"]
+        opciones_p2_a = list(dict.fromkeys(opciones_p2_a))
+        respuestas["p2_a"] = st.selectbox("", opciones_p2_a, key="p2_a", label_visibility="collapsed")
+    with col_p2a3:
+        st.write("")
     
-    st.markdown('<div class="subquestion-title">b) ¿En cuál punto de la gráfica la función $f$ tiene la segunda derivada igual a 0? (4 Puntos)</div>', unsafe_allow_html=True)
-    opciones_p2_b = ["Seleccionar...", datos["p2"]["p2_der_cero"], "(1,8)", "(-1,12)", "(0,0)", "(2,15)"]
-    respuestas["p2_b"] = st.selectbox("Seleccione el punto:", opciones_p2_b, key="p2_b")
+    # b) Segunda derivada cero
+    st.markdown(f'<div class="subquestion-title">b) ¿En cuál punto de la gráfica de $f(x) = {datos["p2"]["función_latex"].split("=")[1]}$ la función $f$ tiene la segunda derivada igual a 0?</div>', unsafe_allow_html=True)
+    col_p2b1, col_p2b2, col_p2b3 = st.columns([1.5, 2, 8.5], vertical_alignment="center")
+    with col_p2b1:
+        st.markdown('<div class="inline-text">En el punto : </div>', unsafe_allow_html=True)
+    with col_p2b2:
+        opciones_p2_b = ["Seleccionar...", datos["p2"]["p2_der_cero"], "(1,8)", "(-1,12)", "(0,0)", "(2,15)"]
+        opciones_p2_b = list(dict.fromkeys(opciones_p2_b))
+        respuestas["p2_b"] = st.selectbox("", opciones_p2_b, key="p2_b", label_visibility="collapsed")
+    with col_p2b3:
+        st.write("")
     
     # AYUDANTE DE PREGUNTA 2
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
@@ -434,7 +518,7 @@ with st.container():
                 <li>Ingresa la función en la barra de entrada: <br><code>f(x) = x³ - 3x + 10</code> (usa la fórmula correspondiente a tu variación).</li>
                 <li>Para hallar dónde la primera derivada es cero (extremos relativos), escribe: <br><code>Extremo(f)</code>. GeoGebra te indicará las coordenadas de los máximos y mínimos.</li>
                 <li>Para hallar dónde la segunda derivada es cero, escribe: <br><code>PuntoInflexion(f)</code>. Obtendrás las coordenadas del punto de inflexión.</li>
-                <li><em>Alternativa simbólica (Vista CAS):</em> Puedes resolver directamente escribiendo <code>Resolver(f'(x) = 0)</code> para la primera parte, y <code>Resolver(f''(x) = 0)</code> para la segunda.</li>
+                <li><em>Alternativa simbólica (Vista CAS):</em> Puedes resolver directamente escribiendo <code>Resolver(f'(x) = 0)</code> para la primera parte, y <code>Resolver(f'') (x) = 0)</code> para la segunda.</li>
             </ol>
             
             <h4>🌍 Aplicación en la Vida Real</h4>
@@ -447,38 +531,68 @@ with st.container():
 # ==================== PREGUNTA 3 ====================
 with st.container():
     st.markdown('<div class="question-box">', unsafe_allow_html=True)
-    st.markdown('<div class="question-title">3. FUNCIÓN DESCONOCIDA (20 Puntos)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="question-title">FUNCIÓN DESCONOCIDA (20 PUNTOS)</div>', unsafe_allow_html=True)
     st.write("La posición de una partícula está representada por una función $f$ desconocida.")
     st.write("La tabla adjunta muestra la pendiente $M(x)$ de la recta tangente a $f$ para algunos valores de $x$:")
     
+    # Crear DataFrame para la tabla
     df_p3 = pd.DataFrame(datos["p3"]["tabla"])
     st.table(df_p3.set_index("x").T)
     
     st.write("Sabiendo que $M(x) = f'(x)$, conteste:")
     
-    st.markdown('<div class="subquestion-title">a) ¿Cuál es la expresión algebraica que modela la pendiente $M(x)$? (5 Puntos)</div>', unsafe_allow_html=True)
-    respuestas["p3_a"] = st.text_input("Expresión de M(x) (sin espacios, ej: 6x+4+9/(3x+1)):", key="p3_a")
+    # a) Dropdown
+    st.markdown('<div class="subquestion-title">a) ¿Cuál es la expresión algebraica que modela la pendiente $M(x)$? (5 puntos)</div>', unsafe_allow_html=True)
+    col_p3a1, col_p3a2 = st.columns([4, 8], vertical_alignment="center")
+    with col_p3a1:
+        opt_correct_m = datos["p3"]["exp_m"]
+        opciones_p3_a = ["Seleccionar...", opt_correct_m, "5x+3+8/(2x+1)", "8x+4+10/(4x+1)", "6x+4+9/(2x+1)"]
+        opciones_p3_a = list(dict.fromkeys(opciones_p3_a))
+        respuestas["p3_a"] = st.selectbox("", opciones_p3_a, key="p3_a", label_visibility="collapsed")
+    with col_p3a2:
+        st.write("")
     
-    st.markdown('<div class="subquestion-title">b) ¿Cuál de las siguientes expresiones algebraicas podría representar a la función $f$ desconocida? (5 Puntos)</div>', unsafe_allow_html=True)
-    opt_f_correcta = datos["p3"]["exp_f"]
-    opciones_p3_b = [
-        "Seleccionar...",
-        opt_f_correcta,
-        opt_f_correcta.replace("3x^2", "6x^2").replace("3ln", "9ln").replace("2.5x^2", "5x^2").replace("4x^2", "8x^2"),
-        opt_f_correcta.replace("4x", "2x").replace("+C", ""),
-        "3x^2 + 4x + ln(3x+1) + C"
-    ]
-    opciones_p3_b = list(dict.fromkeys(opciones_p3_b))
-    respuestas["p3_b"] = st.selectbox("Seleccione la función f(x):", opciones_p3_b, key="p3_b")
+    # b) Dropdown
+    st.markdown('<div class="subquestion-title">b) ¿Cuál de las siguientes expresiones algebraicas podría representar a la función $f$ desconocida? (5 puntos)</div>', unsafe_allow_html=True)
+    col_p3b1, col_p3b2 = st.columns([4, 8], vertical_alignment="center")
+    with col_p3b1:
+        opt_f_correcta = datos["p3"]["exp_f"]
+        opciones_p3_b = [
+            "Seleccionar...",
+            opt_f_correcta,
+            "3x^2+4x+3ln(3x+1)+C",
+            "2.5x^2+3x+4ln(2x+1)+C",
+            "4x^2+4x+2.5ln(4x+1)+C"
+        ]
+        opciones_p3_b = list(dict.fromkeys(opciones_p3_b))
+        respuestas["p3_b"] = st.selectbox("", opciones_p3_b, key="p3_b", label_visibility="collapsed")
+    with col_p3b2:
+        st.write("")
     
-    st.markdown("**INDICACIÓN: INGRESE LOS VALORES EN FORMATO DECIMAL (Redondeo a 3 decimales)**")
+    st.markdown("<br><b>INDICACIÓN: INGRESE LOS VALORES EN FORMATO DECIMAL (Redondeo a 3 decimales)</b>", unsafe_allow_html=True)
     st.write("Sabiendo que la velocidad de la partícula es $V(x) = f'(x)$ y la aceleración $A(x) = V'(x)$:")
     
-    col_v, col_a = st.columns(2)
-    with col_v:
-        respuestas["p3_c"] = st.text_input("c) ¿Cuál es la velocidad en t = 5 segundos? (5 Puntos)", key="p3_c", placeholder="Ej: 34.563")
-    with col_a:
-        respuestas["p3_d"] = st.text_input("d) ¿Cuál es la aceleración en t = 2 segundos? (5 Puntos)", key="p3_d", placeholder="Ej: 5.449")
+    # c) Velocidad en una línea horizontal
+    col_p3c1, col_p3c2, col_p3c3, col_p3c4 = st.columns([3.5, 1.5, 0.6, 6.4], vertical_alignment="center")
+    with col_p3c1:
+        st.markdown('<div class="inline-text">c) ¿Cuál es la velocidad de la partícula en el instante 5 segundos? (5 puntos)</div>', unsafe_allow_html=True)
+    with col_p3c2:
+        respuestas["p3_c"] = st.text_input("", key="p3_c", label_visibility="collapsed")
+    with col_p3c3:
+        st.markdown('<div class="inline-text"> m/s </div>', unsafe_allow_html=True)
+    with col_p3c4:
+        st.write("")
+        
+    # d) Aceleración en una línea horizontal
+    col_p3d1, col_p3d2, col_p3d3, col_p3d4 = st.columns([3.5, 1.5, 0.6, 6.4], vertical_alignment="center")
+    with col_p3d1:
+        st.markdown('<div class="inline-text">d) ¿Cuál es la aceleración de la partícula cuando han transcurrido 2 segundos? (5 puntos)</div>', unsafe_allow_html=True)
+    with col_p3d2:
+        respuestas["p3_d"] = st.text_input("", key="p3_d", label_visibility="collapsed")
+    with col_p3d3:
+        st.markdown('<div class="inline-text"> m/s² </div>', unsafe_allow_html=True)
+    with col_p3d4:
+        st.write("")
         
     # AYUDANTE DE PREGUNTA 3
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
@@ -505,39 +619,83 @@ with st.container():
 # ==================== PREGUNTA 4 ====================
 with st.container():
     st.markdown('<div class="question-box">', unsafe_allow_html=True)
-    st.markdown('<div class="question-title">4. ESTUDIO DE UNA FUNCIÓN CONOCIDA (30 Puntos)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="question-title">ESTUDIO DE UNA FUNCIÓN CONOCIDA (30 Puntos)</div>', unsafe_allow_html=True)
     st.write("Considere la siguiente función cúbica:")
     st.latex(datos["p4"]["función_latex"])
-    st.write("Conteste:")
+    st.write("Conteste las siguientes preguntas:")
     
-    st.markdown('<div class="subquestion-title">a) ¿Cuál es la derivada de la función $f(x)$? (7 Puntos)</div>', unsafe_allow_html=True)
-    st.caption("Ingrese su resultado sin espacios entre caracteres, ej: 1080x^2-3672x+2430")
-    respuestas["p4_a"] = st.text_input("La derivada es:", key="p4_a")
+    # a) Derivada
+    st.markdown('<div class="subquestion-title">a) ¿Cuál es la derivada de la función $f(x)$? (7 puntos)</div>', unsafe_allow_html=True)
+    st.caption("Ingrese su resultado como en el siguiente ejemplo: 15x^3-7x^2+4x+5 , sin espacio entre caracteres.")
+    col_p4a1, col_p4a2, col_p4a3 = st.columns([1.5, 3, 7.5], vertical_alignment="center")
+    with col_p4a1:
+        st.markdown('<div class="inline-text">La derivada es : </div>', unsafe_allow_html=True)
+    with col_p4a2:
+        respuestas["p4_a"] = st.text_input("", key="p4_a", label_visibility="collapsed")
+    with col_p4a3:
+        st.write("")
     
-    st.markdown('<div class="subquestion-title">b) ¿Determine el valor de la pendiente a la recta tangente a $f$ en su punto mínimo relativo? (5 Puntos)</div>', unsafe_allow_html=True)
-    respuestas["p4_b"] = st.text_input("El valor de la pendiente es:", key="p4_b", placeholder="Ej: 0")
+    # b) Pendiente en mínimo
+    st.markdown('<div class="subquestion-title">b) ¿Determine el valor de la pendiente a la recta tangente a $f$ en su punto mínimo relativo? (5 puntos)</div>', unsafe_allow_html=True)
+    col_p4b1, col_p4b2, col_p4b3 = st.columns([2.2, 1.5, 8.3], vertical_alignment="center")
+    with col_p4b1:
+        st.markdown('<div class="inline-text">El valor de la pendiente es : </div>', unsafe_allow_html=True)
+    with col_p4b2:
+        respuestas["p4_b"] = st.text_input("", key="p4_b", label_visibility="collapsed")
+    with col_p4b3:
+        st.write("")
     
-    st.markdown('<div class="subquestion-title">c) Encuentre el intervalo donde $f$ decrece. (5 Puntos)</div>', unsafe_allow_html=True)
-    opt_dec = datos["p4"]["intervalo_dec"]
-    opciones_p4_c = ["Seleccionar...", opt_dec, "]0.5,1.5[", "]-inf,0.9[ U ]2.5,inf[", "]1.7,inf[", "]-8,6["]
-    opciones_p4_c = list(dict.fromkeys(opciones_p4_c))
-    respuestas["p4_c"] = st.selectbox("El intervalo es:", opciones_p4_c, key="p4_c")
-    
-    st.markdown('<div class="subquestion-title">d) ¿Cuál es el valor máximo relativo de la función $f$? (5 Puntos)</div>', unsafe_allow_html=True)
-    respuestas["p4_d"] = st.text_input("El máximo relativo es:", key="p4_d")
-    
-    st.markdown('<div class="subquestion-title">e) ¿En cuál intervalo la función $f$ es cóncava hacia arriba? (4 Puntos)</div>', unsafe_allow_html=True)
-    opt_conc = datos["p4"]["concava_arriba"]
-    opciones_p4_e = ["Seleccionar...", opt_conc, "]1.7,inf[", "]-inf,1.7[", "]0.9,2.5[", "]1.0,inf["]
-    opciones_p4_e = list(dict.fromkeys(opciones_p4_e))
-    respuestas["p4_e"] = st.selectbox("El intervalo de concavidad es:", opciones_p4_e, key="p4_e")
-    
-    st.markdown('<div class="subquestion-title">f) ¿En cuál punto de la curva $f$ la pendiente de la recta tangente es mínima? (4 Puntos)</div>', unsafe_allow_html=True)
-    col_p4_fx, col_p4_fy = st.columns(2)
-    with col_p4_fx:
-        respuestas["p4_fx"] = st.text_input("Coordenada X del punto:", key="p4_fx", placeholder="Ej: 1.7")
-    with col_p4_fy:
-        respuestas["p4_fy"] = st.text_input("Coordenada Y del punto:", key="p4_fy", placeholder="Ej: 593.64")
+    # c) Intervalo donde f decrece
+    st.markdown('<div class="subquestion-title">c) Encuentre el intervalo donde $f$ decrece. (5 puntos)</div>', unsafe_allow_html=True)
+    col_p4c1, col_p4c2, col_p4c3 = st.columns([1.5, 2.5, 8], vertical_alignment="center")
+    with col_p4c1:
+        st.markdown('<div class="inline-text">El intervalo es: </div>', unsafe_allow_html=True)
+    with col_p4c2:
+        opt_dec = datos["p4"]["intervalo_dec"]
+        opciones_p4_c = ["Seleccionar...", opt_dec, "]0.5,1.5[", "]-inf,0.9[ U ]2.5,inf[", "]1.7,inf[", "]-8,6["]
+        opciones_p4_c = list(dict.fromkeys(opciones_p4_c))
+        respuestas["p4_c"] = st.selectbox("", opciones_p4_c, key="p4_c", label_visibility="collapsed")
+    with col_p4c3:
+        st.write("")
+        
+    # d) Máximo relativo
+    st.markdown('<div class="subquestion-title">d) ¿Cuál es el valor máximo relativo de la función $f$ ? (5 puntos)</div>', unsafe_allow_html=True)
+    col_p4d1, col_p4d2, col_p4d3 = st.columns([2, 1.5, 8.5], vertical_alignment="center")
+    with col_p4d1:
+        st.markdown('<div class="inline-text">El máximo relativo es: </div>', unsafe_allow_html=True)
+    with col_p4d2:
+        respuestas["p4_d"] = st.text_input("", key="p4_d", label_visibility="collapsed")
+    with col_p4d3:
+        st.write("")
+        
+    # e) Cóncava arriba
+    st.markdown('<div class="subquestion-title">e) ¿En cuál intervalo la función $f$ es cóncava hacia arriba? (4 puntos)</div>', unsafe_allow_html=True)
+    col_p4e1, col_p4e2, col_p4e3 = st.columns([1.5, 2.5, 8], vertical_alignment="center")
+    with col_p4e1:
+        st.markdown('<div class="inline-text">El intervalo es: </div>', unsafe_allow_html=True)
+    with col_p4e2:
+        opt_conc = datos["p4"]["concava_arriba"]
+        opciones_p4_e = ["Seleccionar...", opt_conc, "]1.7,inf[", "]-inf,1.7[", "]0.9,2.5[", "]1.0,inf["]
+        opciones_p4_e = list(dict.fromkeys(opciones_p4_e))
+        respuestas["p4_e"] = st.selectbox("", opciones_p4_e, key="p4_e", label_visibility="collapsed")
+    with col_p4e3:
+        st.write("")
+        
+    # f) Pendiente tangente mínima
+    st.markdown('<div class="subquestion-title">f) ¿En cuál punto de la curva $f$ la pendiente de la recta tangente es mínima? (4 puntos)</div>', unsafe_allow_html=True)
+    col_p4f1, col_p4f2, col_p4f3, col_p4f4, col_p4f5, col_p4f6 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 5.4], vertical_alignment="center")
+    with col_p4f1:
+        st.markdown('<div class="inline-text">La pendiente es mínima en el punto : </div>', unsafe_allow_html=True)
+    with col_p4f2:
+        st.markdown('<div class="inline-text"> ( </div>', unsafe_allow_html=True)
+    with col_p4f3:
+        respuestas["p4_fx"] = st.text_input("", key="p4_fx", label_visibility="collapsed")
+    with col_p4f4:
+        st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
+    with col_p4f5:
+        respuestas["p4_fy"] = st.text_input("", key="p4_fy", label_visibility="collapsed")
+    with col_p4f6:
+        st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
         
     # AYUDANTE DE PREGUNTA 4
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
@@ -571,36 +729,78 @@ with st.container():
 # ==================== PREGUNTA 5 ====================
 with st.container():
     st.markdown('<div class="question-box">', unsafe_allow_html=True)
-    st.markdown('<div class="question-title">5. CURVA LOGÍSTICA (25 Puntos)</div>', unsafe_allow_html=True)
-    st.write("Dada la tabla adjunta de puntos $(x, y)$:")
+    st.markdown('<div class="question-title">CURVA LOGÍSTICA (25 puntos)</div>', unsafe_allow_html=True)
+    st.write("En esta pregunta realice los siguientes pasos:")
+    st.write("1).- Dada la tabla adjunta, copie los datos de y (en celeste) en la tabla del geogebra.")
     
     df_p5 = pd.DataFrame(datos["p5"]["tabla"])
     st.table(df_p5.T)
     
-    st.write("Si manipulamos los deslizadores en Geogebra para que el modelo logístico $C(x) = \\frac{A e^{Kx}}{B + e^{Kx}}$ se ajuste a los 10 puntos:")
+    st.write("2).- Manipule los deslizadores para que la curva pase por el centro de los 10 puntos.")
+    st.write("Conteste las siguientes preguntas.")
     
-    col_la, col_lb, col_lk = st.columns(3)
-    with col_la:
-        respuestas["p5_a"] = st.text_input("a) El valor de A es: (3 Puntos)", key="p5_a", placeholder="Ej: 240")
-    with col_lb:
-        respuestas["p5_b"] = st.text_input("b) El valor de B es: (3 Puntos)", key="p5_b", placeholder="Ej: 214")
-    with col_lk:
-        respuestas["p5_k"] = st.text_input("c) El valor de K es: (3 Puntos)", key="p5_k", placeholder="Ej: 0.65")
+    # a, b, c) Deslizadores
+    col_p5a1, col_p5a2, col_p5a3 = st.columns([1.5, 1.5, 9], vertical_alignment="center")
+    with col_p5a1:
+        st.markdown('<div class="inline-text">a) El valor de A es : </div>', unsafe_allow_html=True)
+    with col_p5a2:
+        respuestas["p5_a"] = st.text_input("", key="p5_a", label_visibility="collapsed")
+    with col_p5a3:
+        st.markdown('<div class="inline-text"> (3 puntos) </div>', unsafe_allow_html=True)
+
+    col_p5b1, col_p5b2, col_p5b3 = st.columns([1.5, 1.5, 9], vertical_alignment="center")
+    with col_p5b1:
+        st.markdown('<div class="inline-text">b) El valor de B es : </div>', unsafe_allow_html=True)
+    with col_p5b2:
+        respuestas["p5_b"] = st.text_input("", key="p5_b", label_visibility="collapsed")
+    with col_p5b3:
+        st.markdown('<div class="inline-text"> (3 puntos) </div>', unsafe_allow_html=True)
+
+    col_p5c1, col_p5c2, col_p5c3 = st.columns([1.5, 1.5, 9], vertical_alignment="center")
+    with col_p5c1:
+        st.markdown('<div class="inline-text">c) El valor de K es : </div>', unsafe_allow_html=True)
+    with col_p5c2:
+        respuestas["p5_k"] = st.text_input("", key="p5_k", label_visibility="collapsed")
+    with col_p5c3:
+        st.markdown('<div class="inline-text"> (3 puntos) </div>', unsafe_allow_html=True)
         
-    st.markdown('<div class="subquestion-title">d) ¿Cuál es el valor máximo de $C(x)$? (5 Puntos)</div>', unsafe_allow_html=True)
-    opciones_p5_d = ["Seleccionar...", str(int(datos["p5"]["max_val"])), "270", "300", "200", "250"]
-    opciones_p5_d = list(dict.fromkeys(opciones_p5_d))
-    respuestas["p5_d"] = st.selectbox("El máximo valor es:", opciones_p5_d, key="p5_d")
+    # d) C(x) max
+    st.markdown('<div class="subquestion-title">d) ¿Cuál es el valor máximo de $C(x)$? (5 puntos)</div>', unsafe_allow_html=True)
+    col_p5d1, col_p5d2, col_p5d3 = st.columns([1.8, 2, 8.2], vertical_alignment="center")
+    with col_p5d1:
+        st.markdown('<div class="inline-text">El máximo valor es: </div>', unsafe_allow_html=True)
+    with col_p5d2:
+        opciones_p5_d = ["Seleccionar...", str(int(datos["p5"]["max_val"])), "270", "300", "200", "250"]
+        opciones_p5_d = list(dict.fromkeys(opciones_p5_d))
+        respuestas["p5_d"] = st.selectbox("", opciones_p5_d, key="p5_d", label_visibility="collapsed")
+    with col_p5d3:
+        st.write("")
     
-    st.markdown('<div class="subquestion-title">e) Encuentre el punto de inflexión de la curva. (6 Puntos)</div>', unsafe_allow_html=True)
-    col_p5_infx, col_p5_infy = st.columns(2)
-    with col_p5_infx:
-        respuestas["p5_infx"] = st.text_input("Inflexión Coordenada X (Redondeo a 3 decimales):", key="p5_infx", placeholder="Ej: 8.256")
-    with col_p5_infy:
-        respuestas["p5_infy"] = st.text_input("Inflexión Coordenada Y (Redondeo a 1 decimal):", key="p5_infy", placeholder="Ej: 120.0")
+    # e) Inflexión curva logística
+    st.markdown('<div class="subquestion-title">e) Encuentre el punto de inflexión de la curva. (6 puntos)</div>', unsafe_allow_html=True)
+    col_p5e1, col_p5e2, col_p5e3, col_p5e4, col_p5e5, col_p5e6 = st.columns([2, 0.3, 1.5, 0.3, 1.5, 6.4], vertical_alignment="center")
+    with col_p5e1:
+        st.markdown('<div class="inline-text">El punto de inflexión es: </div>', unsafe_allow_html=True)
+    with col_p5e2:
+        st.markdown('<div class="inline-text"> ( </div>', unsafe_allow_html=True)
+    with col_p5e3:
+        respuestas["p5_infx"] = st.text_input("", key="p5_infx", label_visibility="collapsed")
+    with col_p5e4:
+        st.markdown('<div class="inline-text"> , </div>', unsafe_allow_html=True)
+    with col_p5e5:
+        respuestas["p5_infy"] = st.text_input("", key="p5_infy", label_visibility="collapsed")
+    with col_p5e6:
+        st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
         
-    st.markdown('<div class="subquestion-title">f) ¿Cuál es la máxima pendiente de la curva? (5 Puntos)</div>', unsafe_allow_html=True)
-    respuestas["p5_slope"] = st.text_input("La máxima pendiente es:", key="p5_slope", placeholder="Ej: 39")
+    # f) Pendiente máxima curva logística
+    st.markdown('<div class="subquestion-title">f) ¿Cuál es la máxima pendiente de la curva? (5 puntos)</div>', unsafe_allow_html=True)
+    col_p5f1, col_p5f2, col_p5f3 = st.columns([2, 1.5, 8.5], vertical_alignment="center")
+    with col_p5f1:
+        st.markdown('<div class="inline-text">La máxima pendiente es : </div>', unsafe_allow_html=True)
+    with col_p5f2:
+        respuestas["p5_slope"] = st.text_input("", key="p5_slope", label_visibility="collapsed")
+    with col_p5f3:
+        st.write("")
     
     # AYUDANTE DE PREGUNTA 5
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
@@ -661,21 +861,11 @@ if btn_calificar:
     detalles.append({"Pregunta": "1.a) Coeficiente d", "Estado": "✅" if p1_d_ok else "❌", "Esperado": datos["p1"]["d"], "Ingresado": respuestas["p1_d"], "Puntos": p1_d_pts})
     puntos_obtenidos += (p1_a_pts + p1_b_pts + p1_c_pts + p1_d_pts)
     
-    # b) Valores críticos (4 pts: 2 pts c/u)
-    crit1_ok, crit1_val = validate_numeric(respuestas["p1_crit1"], float(datos["p1"]["valores_criticos"][0]))
-    crit2_ok, crit2_val = validate_numeric(respuestas["p1_crit2"], float(datos["p1"]["valores_criticos"][1]))
-    if not (crit1_ok and crit2_ok):
-        # Intentar al revés
-        crit1_ok_rev, _ = validate_numeric(respuestas["p1_crit1"], float(datos["p1"]["valores_criticos"][1]))
-        crit2_ok_rev, _ = validate_numeric(respuestas["p1_crit2"], float(datos["p1"]["valores_criticos"][0]))
-        if crit1_ok_rev and crit2_ok_rev:
-            crit1_ok, crit2_ok = True, True
-    
-    p1_crit1_pts = 2.0 if crit1_ok else 0.0
-    p1_crit2_pts = 2.0 if crit2_ok else 0.0
-    puntos_obtenidos += (p1_crit1_pts + p1_crit2_pts)
-    detalles.append({"Pregunta": "1.b) Valor Crítico 1", "Estado": "✅" if crit1_ok else "❌", "Esperado": f"Uno de {datos['p1']['valores_criticos']}", "Ingresado": respuestas["p1_crit1"], "Puntos": p1_crit1_pts})
-    detalles.append({"Pregunta": "1.b) Valor Crítico 2", "Estado": "✅" if crit2_ok else "❌", "Esperado": f"Uno de {datos['p1']['valores_criticos']}", "Ingresado": respuestas["p1_crit2"], "Puntos": p1_crit2_pts})
+    # b) Valores críticos (4 pts)
+    p1_crit_ok = respuestas["p1_crit_sel"] == datos["p1"]["valores_criticos_str"]
+    p1_crit_pts = 4.0 if p1_crit_ok else 0.0
+    puntos_obtenidos += p1_crit_pts
+    detalles.append({"Pregunta": "1.b) Valores críticos de f", "Estado": "✅" if p1_crit_ok else "❌", "Esperado": datos["p1"]["valores_criticos_str"], "Ingresado": respuestas["p1_crit_sel"], "Puntos": p1_crit_pts})
 
     # c) Mínimo relativo (2 pts: 1 pt c/u)
     min_x_ok, _ = validate_numeric(respuestas["p1_min_x"], datos["p1"]["min_x"])
@@ -701,11 +891,20 @@ if btn_calificar:
     detalles.append({"Pregunta": "1.e) Inflexión X", "Estado": "✅" if inf_x_ok else "❌", "Esperado": datos["p1"]["inf_x"], "Ingresado": respuestas["p1_inf_x"], "Puntos": 2.0 if inf_x_ok else 0.0})
     detalles.append({"Pregunta": "1.e) Inflexión Y", "Estado": "✅" if inf_y_ok else "❌", "Esperado": datos["p1"]["inf_y"], "Ingresado": respuestas["p1_inf_y"], "Puntos": 2.0 if inf_y_ok else 0.0})
 
-    # f) Intervalo creciente (4 pts)
-    p1_int_ok = validate_string(respuestas["p1_intervalo"], datos["p1"]["intervalo_creciente"])
-    p1_int_pts = 4.0 if p1_int_ok else 0.0
+    # f) Intervalo decreciente (4 pts: 2 pts c/u) - Nota: Valida los extremos del intervalo del decremento
+    int1_ok, _ = validate_numeric(respuestas["p1_int1"], float(datos["p1"]["valores_criticos"][0]))
+    int2_ok, _ = validate_numeric(respuestas["p1_int2"], float(datos["p1"]["valores_criticos"][1]))
+    if not (int1_ok and int2_ok):
+        # Intentar al revés
+        int1_ok_rev, _ = validate_numeric(respuestas["p1_int1"], float(datos["p1"]["valores_criticos"][1]))
+        int2_ok_rev, _ = validate_numeric(respuestas["p1_int2"], float(datos["p1"]["valores_criticos"][0]))
+        if int1_ok_rev and int2_ok_rev:
+            int1_ok, int2_ok = True, True
+            
+    p1_int_pts = (2.0 if int1_ok else 0.0) + (2.0 if int2_ok else 0.0)
     puntos_obtenidos += p1_int_pts
-    detalles.append({"Pregunta": "1.f) Intervalo Creciente", "Estado": "✅" if p1_int_ok else "❌", "Esperado": datos["p1"]["intervalo_creciente"], "Ingresado": respuestas["p1_intervalo"], "Puntos": p1_int_pts})
+    detalles.append({"Pregunta": "1.f) Intervalo de decremento izquierdo", "Estado": "✅" if int1_ok else "❌", "Esperado": f"Uno de {datos['p1']['valores_criticos']}", "Ingresado": respuestas["p1_int1"], "Puntos": 2.0 if int1_ok else 0.0})
+    detalles.append({"Pregunta": "1.f) Intervalo de decremento derecho", "Estado": "✅" if int2_ok else "❌", "Esperado": f"Uno de {datos['p1']['valores_criticos']}", "Ingresado": respuestas["p1_int2"], "Puntos": 2.0 if int2_ok else 0.0})
 
     # Pregunta 2
     # a) Primera derivada cero (4 pts)
