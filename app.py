@@ -837,24 +837,49 @@ with st.container(border=True):
     # AYUDANTE DE PREGUNTA 3
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
-### Razonamiento Pedagógico
-En este problema analizamos la relación entre progresiones y cálculo aplicado al movimiento de una partícula:
+### 🧠 Entendiendo el Problema de Forma Fácil
+En este problema analizamos el movimiento de una partícula. Se nos proporciona una tabla con valores de la **pendiente** $M(x)$ de la recta tangente para ciertos instantes de tiempo $x$:
+1. **La Pendiente es la Velocidad**: Por definición del cálculo, la pendiente de la recta tangente a la función de posición $f(x)$ es la primera derivada $f'(x)$. Por lo tanto, la función $M(x)$ es igual a la **velocidad** de la partícula ($V(x) = f'(x)$).
+2. **De Velocidad a Posición (Integración)**: Si conocemos la velocidad $M(x)$ y queremos saber la posición $f(x)$, realizamos la operación inversa a la derivada: la **integral indefinida** ($f(x) = \int M(x) \, dx$).
+3. **De Velocidad a Aceleración (Derivación)**: La aceleración mide el cambio de la velocidad en el tiempo. Por tanto, la aceleración es la derivada de la velocidad: $A(x) = M'(x) = f''(x)$.
 
-* **El patrón de la pendiente**: Los valores de `M(x)` muestran una parte lineal y una fraccionaria que siguen una progresión aritmética (primer término + diferencia * (x - 1)). La pendiente es la derivada de la posición: `M(x) = f'(x)`.
-* **La Derivada (Velocidad)**: La velocidad instantánea `V(t)` de un objeto es la **primera derivada de su posición** con respecto al tiempo, representando la tasa de cambio de la distancia recorrida.
-  * **Cómo afecta**: Si la velocidad es positiva, la partícula avanza; si es negativa, retrocede. Para calcular la velocidad a los 5 segundos, evaluamos directamente la primera derivada en dicho punto (`V(5) = f'(5)`).
-* **La Segunda Derivada (Aceleración)**: La aceleración `A(t)` es la tasa de cambio de la velocidad con respecto al tiempo, lo que equivale a la **segunda derivada de la posición** (`A(t) = V'(t) = f''(t)`).
-  * **Cómo afecta**: Si la aceleración es positiva, la partícula está acelerando (aumentando su velocidad); si es negativa, está frenando (desacelerando). Para hallarla, derivamos la función de la pendiente `M(x)` y la evaluamos en t = 2.
-* **Integración**: Para recuperar la función de posición `f(x)` a partir de su derivada `M(x)`, aplicamos la operación inversa de la derivada, que es la **integral indefinida** (sumando la constante de integración `C`).
+---
 
-### Cómo resolverlo en GeoGebra
-1. Define la función de la pendiente en la barra de entrada: `M(x) = 6x + 4 + 9 / (3x + 1)` (o la correspondiente a tu variación).
-2. Para encontrar la función de posición `f(x)`, calcula la integral indefinida escribiendo: `Integral(M)`.
-3. Para obtener la velocidad a los 5 segundos, evalúa la derivada de forma directa escribiendo: `M(5)`.
-4. Para obtener la aceleración a los 2 segundos, calcula la derivada de la pendiente escribiendo: `A(x) = Derivada(M)`, y luego evalúala en 2 escribiendo: `A(2)`.
+### 🛠️ Guía Paso a Paso en GeoGebra Clásico (Por Literal)
 
-### Aplicación en la Vida Real
-Es la base del funcionamiento de los **sistemas de navegación inercial** en naves espaciales, aviones y teléfonos inteligentes. Los sensores miden de forma continua la aceleración (segunda derivada), la cual se integra una vez para obtener la velocidad (primera derivada) y se integra por segunda vez para calcular la posición exacta del dispositivo en tiempo real.
+#### **Literal a) Expresión algebraica de la pendiente $M(x)$**
+* **¿Qué hacer en GeoGebra?**
+  Identifica cuál de las opciones de la lista desplegable coincide con el patrón de la tabla de tu variación y defínela en la barra de entrada de GeoGebra escribiendo la función. Por ejemplo:
+  * **Para la Variación 1**: Escribe `M(x) = 6x + 4 + 9 / (3x + 1)` y presiona Enter.
+  * **Para la Variación 2**: Escribe `M(x) = 5x + 3 + 8 / (2x + 1)` y presiona Enter.
+  * **Para la Variación 3**: Escribe `M(x) = 8x + 4 + 10 / (4x + 1)` y presiona Enter.
+* **¿Por qué?**
+  Al definir la función de la pendiente $M(x)$ (velocidad) en GeoGebra, la dejamos guardada en memoria para realizar las operaciones de los siguientes literales de forma automática y exacta.
+
+#### **Literal b) Expresión algebraica de la posición $f(x)$**
+* **¿Qué hacer en GeoGebra?**
+  En la barra de entrada, escribe el comando:
+  `Integral(M)`
+  GeoGebra calculará la integral indefinida y te mostrará la función resultante.
+* **¿Por qué?**
+  Dado que la velocidad $M(x)$ es la derivada de la posición ($f'(x)$), para recuperar la función original de la posición de la partícula aplicamos la **operación de integración**. Recuerda agregar de forma escrita la constante de integración $+ C$ en tu respuesta seleccionada.
+
+#### **Literal c) Velocidad de la partícula en el instante 5 segundos**
+* **¿Qué hacer en GeoGebra?**
+  En la barra de entrada, escribe:
+  `M(5)`
+  Presiona Enter y GeoGebra calculará de inmediato el valor numérico.
+* **¿Por qué?**
+  La función de la pendiente $M(x)$ es directamente la velocidad de la partícula. Por tanto, para conocer la velocidad en el segundo 5, basta con evaluar la función $M(x)$ en $x = 5$.
+
+#### **Literal d) Aceleración de la partícula a los 2 segundos**
+* **¿Qué hacer en GeoGebra?**
+  1. En la barra de entrada, calcula la función de la aceleración derivando la velocidad:
+     `A(x) = Derivada(M)`
+  2. Luego, evalúa la aceleración a los 2 segundos escribiendo:
+     `A(2)`
+* **¿Por qué?**
+  La aceleración es el cambio de la velocidad respecto al tiempo. Derivamos la función de velocidad $M(x)$ para obtener la función de aceleración $A(x) = M'(x)$, y finalmente evaluamos dicho resultado en $x = 2$ segundos.
 """)
         
 # ==================== PREGUNTA 4 ====================
