@@ -492,7 +492,7 @@ with st.container():
 
     # c) Mínimo relativo
     st.markdown('<div class="subquestion-title">c) ¿Cuál es el punto mínimo relativo? (2 puntos)</div>', unsafe_allow_html=True)
-    col_c1, col_c2, col_c3, col_c4, col_c5, col_c6, col_c7 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 0.3, 2.5, 2.9], vertical_alignment="center")
+    col_c1, col_c2, col_c3, col_c4, col_c5, col_c6, col_c7, col_c8 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 0.3, 2.5, 2.9], vertical_alignment="center")
     with col_c1:
         st.markdown('<div class="inline-text">El punto mínimo relativo es : </div>', unsafe_allow_html=True)
     with col_c2:
@@ -519,10 +519,12 @@ with st.container():
             st.session_state["feedback_respuestas"]["p1_min_y"] = {"ok": min_y_ok, "ingresado": respuestas["p1_min_y"], "esperado": datos["p1"]["min_y"]}
             st.session_state["validada_p1_c"] = True
             st.rerun()
+    with col_c8:
+        st.write("")
 
     # d) Máximo relativo
     st.markdown('<div class="subquestion-title">d) ¿Cuál es el punto máximo relativo? (2 puntos)</div>', unsafe_allow_html=True)
-    col_d1, col_d2, col_d3, col_d4, col_d5, col_d6, col_d7 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 0.3, 2.5, 2.9], vertical_alignment="center")
+    col_d1, col_d2, col_d3, col_d4, col_d5, col_d6, col_d7, col_d8 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 0.3, 2.5, 2.9], vertical_alignment="center")
     with col_d1:
         st.markdown('<div class="inline-text">El punto máximo relativo es : </div>', unsafe_allow_html=True)
     with col_d2:
@@ -549,10 +551,12 @@ with st.container():
             st.session_state["feedback_respuestas"]["p1_max_y"] = {"ok": max_y_ok, "ingresado": respuestas["p1_max_y"], "esperado": datos["p1"]["max_y"]}
             st.session_state["validada_p1_d"] = True
             st.rerun()
+    with col_d8:
+        st.write("")
 
     # e) Punto de inflexión
     st.markdown('<div class="subquestion-title">e) ¿Cuál es el punto de inflexión de f ? (4 puntos)</div>', unsafe_allow_html=True)
-    col_e1, col_e2, col_e3, col_e4, col_e5, col_e6, col_e7 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 0.3, 2.5, 2.9], vertical_alignment="center")
+    col_e1, col_e2, col_e3, col_e4, col_e5, col_e6, col_e7, col_e8 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 0.3, 2.5, 2.9], vertical_alignment="center")
     with col_e1:
         st.markdown('<div class="inline-text">El punto de inflexión es : </div>', unsafe_allow_html=True)
     with col_e2:
@@ -579,6 +583,8 @@ with st.container():
             st.session_state["feedback_respuestas"]["p1_inf_y"] = {"ok": inf_y_ok, "ingresado": respuestas["p1_inf_y"], "esperado": datos["p1"]["inf_y"]}
             st.session_state["validada_p1_e"] = True
             st.rerun()
+    with col_e8:
+        st.write("")
 
     # f) Intervalo creciente/decreciente
     st.markdown('<div class="subquestion-title">f) ¿En cuál intervalo f es creciente? (4 puntos)</div>', unsafe_allow_html=True)
@@ -981,7 +987,7 @@ with st.container():
         
     # f) Pendiente tangente mínima
     st.markdown('<div class="subquestion-title">f) ¿En cuál punto de la curva f la pendiente de la recta tangente es mínima? (4 puntos)</div>', unsafe_allow_html=True)
-    col_p4f1, col_p4f2, col_p4f3, col_p4f4, col_p4f5, col_p4f6, col_p4f7 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 0.3, 2.5, 2.9], vertical_alignment="center")
+    col_p4f1, col_p4f2, col_p4f3, col_p4f4, col_p4f5, col_p4f6, col_p4f7, col_p4f8 = st.columns([3, 0.3, 1.5, 0.3, 1.5, 0.3, 2.5, 2.9], vertical_alignment="center")
     with col_p4f1:
         st.markdown('<div class="inline-text">La pendiente es mínima en el punto : </div>', unsafe_allow_html=True)
     with col_p4f2:
@@ -1008,6 +1014,8 @@ with st.container():
             st.session_state["feedback_respuestas"]["p4_fy"] = {"ok": p4_fy_ok, "ingresado": respuestas["p4_fy"], "esperado": datos["p4"]["punto_min_pen_y"]}
             st.session_state["validada_p4_f"] = True
             st.rerun()
+    with col_p4f8:
+        st.write("")
         
     # AYUDANTE DE PREGUNTA 4
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
@@ -1122,7 +1130,7 @@ with st.container():
     
     # e) Inflexión curva logística
     st.markdown('<div class="subquestion-title">e) Encuentre el punto de inflexión de la curva. (6 puntos)</div>', unsafe_allow_html=True)
-    col_p5e1, col_p5e2, col_p5e3, col_p5e4, col_p5e5, col_p5e6, col_p5e7 = st.columns([2, 0.3, 1.5, 0.3, 1.5, 0.3, 2.5, 3.6], vertical_alignment="center")
+    col_p5e1, col_p5e2, col_p5e3, col_p5e4, col_p5e5, col_p5e6, col_p5e7, col_p5e8 = st.columns([2, 0.3, 1.5, 0.3, 1.5, 0.3, 2.5, 3.6], vertical_alignment="center")
     with col_p5e1:
         st.markdown('<div class="inline-text">El punto de inflexión es: </div>', unsafe_allow_html=True)
     with col_p5e2:
@@ -1149,6 +1157,8 @@ with st.container():
             st.session_state["feedback_respuestas"]["p5_infy"] = {"ok": p5_infy_ok, "ingresado": respuestas["p5_infy"], "esperado": datos["p5"]["inf_y"]}
             st.session_state["validada_p5_e"] = True
             st.rerun()
+    with col_p5e8:
+        st.write("")
          
     # f) Pendiente máxima curva logística
     st.markdown('<div class="subquestion-title">f) ¿Cuál es la máxima pendiente de la curva? (5 puntos)</div>', unsafe_allow_html=True)
