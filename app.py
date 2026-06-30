@@ -614,7 +614,7 @@ with st.container(border=True):
         st.write("")
     
     # AYUDANTE DE PREGUNTA 1
-    with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
+    with st.expander("Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
 ### Razonamiento Pedagógico
 Este ejercicio consiste en **interpolación polinómica**. Tienes una función cúbica general de la forma `f(x) = ax³ + bx² + cx + d` y conoces cuatro puntos por los que pasa. Al evaluar la función en cada uno de ellos, obtienes un sistema de 4 ecuaciones lineales con 4 incógnitas (a, b, c, d) que debes resolver.
@@ -690,7 +690,7 @@ with st.container(border=True):
         st.write("")
     
     # AYUDANTE DE PREGUNTA 2
-    with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
+    with st.expander("Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
 ### Razonamiento Pedagógico
 En este ejercicio analizamos cómo las derivadas caracterizan geométricamente a una curva:
@@ -835,9 +835,9 @@ with st.container(border=True):
         st.write("")
         
     # AYUDANTE DE PREGUNTA 3
-    with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
+    with st.expander("Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
-### 🧠 Entendiendo el Problema de Forma Fácil
+### Entendiendo el Problema de Forma Fácil
 En este problema analizamos el movimiento de una partícula. Se nos proporciona una tabla con valores de la **pendiente** $M(x)$ de la recta tangente para ciertos instantes de tiempo $x$:
 1. **La Pendiente es la Velocidad**: Por definición del cálculo, la pendiente de la recta tangente a la función de posición $f(x)$ es la primera derivada $f'(x)$. Por lo tanto, la función $M(x)$ es igual a la **velocidad** de la partícula ($V(x) = f'(x)$).
 2. **De Velocidad a Posición (Integración)**: Si conocemos la velocidad $M(x)$ y queremos saber la posición $f(x)$, realizamos la operación inversa a la derivada: la **integral indefinida** ($f(x) = \int M(x) \, dx$).
@@ -845,7 +845,7 @@ En este problema analizamos el movimiento de una partícula. Se nos proporciona 
 
 ---
 
-### 🛠️ Guía Paso a Paso en GeoGebra Clásico (Por Literal)
+### Guía Paso a Paso en GeoGebra Clásico (Por Literal)
 
 #### **Literal a) Expresión algebraica de la pendiente $M(x)$**
 * **¿Qué hacer en GeoGebra?**
@@ -1026,7 +1026,7 @@ with st.container(border=True):
         st.write("")
         
     # AYUDANTE DE PREGUNTA 4
-    with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
+    with st.expander("Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
 ### Razonamiento Pedagógico
 En este análisis de una función cúbica conocida aplicamos el estudio de curvas mediante derivadas:
@@ -1185,7 +1185,7 @@ with st.container(border=True):
         st.write("")
     
     # AYUDANTE DE PREGUNTA 5
-    with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
+    with st.expander("Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
 ### Razonamiento Pedagógico
 Este problema estudia una **curva de crecimiento logístico**, la cual modela crecimientos acelerados que se topan con límites físicos o ambientales:
