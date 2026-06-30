@@ -149,8 +149,17 @@ if "nota_final" not in st.session_state:
 if "detalles" not in st.session_state:
     st.session_state["detalles"] = []
 
+# Banderas para validación individual de preguntas
+for i in range(1, 6):
+    flag_name = f"validada_p{i}"
+    if flag_name not in st.session_state:
+        st.session_state[flag_name] = False
+
 def dibujar_feedback(key):
-    if st.session_state.get("prueba_enviada", False):
+    pregunta = key.split("_")[0] # extrae p1, p2, p3, p4, p5
+    flag_val = f"validada_{pregunta}"
+    
+    if st.session_state.get("prueba_enviada", False) or st.session_state.get(flag_val, False):
         f_data = st.session_state.get("feedback_respuestas", {}).get(key, None)
         if f_data:
             ok = f_data["ok"]
@@ -501,6 +510,51 @@ with st.container():
     with col_f5:
         st.markdown('<div class="inline-text"> [ </div>', unsafe_allow_html=True)
     
+    st.markdown("<br>", unsafe_allow_html=True)
+    col_v1_1, col_v1_2 = st.columns([8, 4])
+    with col_v1_2:
+        if st.button("🔍 Validar Pregunta 1", key="btn_validar_p1", use_container_width=True):
+            # Guardar valores
+            for k in ["p1_a", "p1_b", "p1_c", "p1_d", "p1_crit_sel", "p1_min_x", "p1_min_y", "p1_max_x", "p1_max_y", "p1_inf_x", "p1_inf_y", "p1_int1", "p1_int2"]:
+                st.session_state["respuestas_usuario"][k] = respuestas[k]
+            
+            # Evaluar Pregunta 1
+            p1_a_ok, _ = validate_numeric(respuestas["p1_a"], datos["p1"]["a"])
+            p1_b_ok, _ = validate_numeric(respuestas["p1_b"], datos["p1"]["b"])
+            p1_c_ok, _ = validate_numeric(respuestas["p1_c"], datos["p1"]["c"])
+            p1_d_ok, _ = validate_numeric(respuestas["p1_d"], datos["p1"]["d"])
+            p1_crit_ok = respuestas["p1_crit_sel"] == datos["p1"]["valores_criticos_str"]
+            min_x_ok, _ = validate_numeric(respuestas["p1_min_x"], datos["p1"]["min_x"])
+            min_y_ok, _ = validate_numeric(respuestas["p1_min_y"], datos["p1"]["min_y"])
+            max_x_ok, _ = validate_numeric(respuestas["p1_max_x"], datos["p1"]["max_x"])
+            max_y_ok, _ = validate_numeric(respuestas["p1_max_y"], datos["p1"]["max_y"])
+            inf_x_ok, _ = validate_numeric(respuestas["p1_inf_x"], datos["p1"]["inf_x"])
+            inf_y_ok, _ = validate_numeric(respuestas["p1_inf_y"], datos["p1"]["inf_y"])
+            int1_ok, _ = validate_numeric(respuestas["p1_int1"], float(datos["p1"]["valores_criticos"][0]))
+            int2_ok, _ = validate_numeric(respuestas["p1_int2"], float(datos["p1"]["valores_criticos"][1]))
+            if not (int1_ok and int2_ok):
+                int1_ok_rev, _ = validate_numeric(respuestas["p1_int1"], float(datos["p1"]["valores_criticos"][1]))
+                int2_ok_rev, _ = validate_numeric(respuestas["p1_int2"], float(datos["p1"]["valores_criticos"][0]))
+                if int1_ok_rev and int2_ok_rev:
+                    int1_ok, int2_ok = True, True
+
+            st.session_state["feedback_respuestas"]["p1_a"] = {"ok": p1_a_ok, "ingresado": respuestas["p1_a"], "esperado": datos["p1"]["a"]}
+            st.session_state["feedback_respuestas"]["p1_b"] = {"ok": p1_b_ok, "ingresado": respuestas["p1_b"], "esperado": datos["p1"]["b"]}
+            st.session_state["feedback_respuestas"]["p1_c"] = {"ok": p1_c_ok, "ingresado": respuestas["p1_c"], "esperado": datos["p1"]["c"]}
+            st.session_state["feedback_respuestas"]["p1_d"] = {"ok": p1_d_ok, "ingresado": respuestas["p1_d"], "esperado": datos["p1"]["d"]}
+            st.session_state["feedback_respuestas"]["p1_crit_sel"] = {"ok": p1_crit_ok, "ingresado": respuestas["p1_crit_sel"], "esperado": datos["p1"]["valores_criticos_str"]}
+            st.session_state["feedback_respuestas"]["p1_min_x"] = {"ok": min_x_ok, "ingresado": respuestas["p1_min_x"], "esperado": datos["p1"]["min_x"]}
+            st.session_state["feedback_respuestas"]["p1_min_y"] = {"ok": min_y_ok, "ingresado": respuestas["p1_min_y"], "esperado": datos["p1"]["min_y"]}
+            st.session_state["feedback_respuestas"]["p1_max_x"] = {"ok": max_x_ok, "ingresado": respuestas["p1_max_x"], "esperado": datos["p1"]["max_x"]}
+            st.session_state["feedback_respuestas"]["p1_max_y"] = {"ok": max_y_ok, "ingresado": respuestas["p1_max_y"], "esperado": datos["p1"]["max_y"]}
+            st.session_state["feedback_respuestas"]["p1_inf_x"] = {"ok": inf_x_ok, "ingresado": respuestas["p1_inf_x"], "esperado": datos["p1"]["inf_x"]}
+            st.session_state["feedback_respuestas"]["p1_inf_y"] = {"ok": inf_y_ok, "ingresado": respuestas["p1_inf_y"], "esperado": datos["p1"]["inf_y"]}
+            st.session_state["feedback_respuestas"]["p1_int1"] = {"ok": int1_ok, "ingresado": respuestas["p1_int1"], "esperado": f"Uno de {datos['p1']['valores_criticos']}"}
+            st.session_state["feedback_respuestas"]["p1_int2"] = {"ok": int2_ok, "ingresado": respuestas["p1_int2"], "esperado": f"Uno de {datos['p1']['valores_criticos']}"}
+            
+            st.session_state["validada_p1"] = True
+            st.rerun()
+    
     # AYUDANTE DE PREGUNTA 1
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
@@ -565,6 +619,24 @@ with st.container():
         dibujar_feedback("p2_b")
     with col_p2b3:
         st.write("")
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    col_v2_1, col_v2_2 = st.columns([8, 4])
+    with col_v2_2:
+        if st.button("🔍 Validar Pregunta 2", key="btn_validar_p2", use_container_width=True):
+            # Guardar valores
+            for k in ["p2_a", "p2_b"]:
+                st.session_state["respuestas_usuario"][k] = respuestas[k]
+            
+            # Evaluar Pregunta 2
+            p2_a_ok = (respuestas["p2_a"] == datos["p2"]["p1_der_cero_opt1"]) or (respuestas["p2_a"] == datos["p2"]["p1_der_cero_opt2"])
+            p2_b_ok = respuestas["p2_b"] == datos["p2"]["p2_der_cero"]
+            
+            st.session_state["feedback_respuestas"]["p2_a"] = {"ok": p2_a_ok, "ingresado": respuestas["p2_a"], "esperado": f"{datos['p2']['p1_der_cero_opt1']} o {datos['p2']['p1_der_cero_opt2']}"}
+            st.session_state["feedback_respuestas"]["p2_b"] = {"ok": p2_b_ok, "ingresado": respuestas["p2_b"], "esperado": datos["p2"]["p2_der_cero"]}
+            
+            st.session_state["validada_p2"] = True
+            st.rerun()
     
     # AYUDANTE DE PREGUNTA 2
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
@@ -686,6 +758,28 @@ with st.container():
         st.markdown('<div class="inline-text"> m/s² </div>', unsafe_allow_html=True)
     with col_p3d4:
         st.write("")
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    col_v3_1, col_v3_2 = st.columns([8, 4])
+    with col_v3_2:
+        if st.button("🔍 Validar Pregunta 3", key="btn_validar_p3", use_container_width=True):
+            # Guardar valores
+            for k in ["p3_a", "p3_b", "p3_c", "p3_d"]:
+                st.session_state["respuestas_usuario"][k] = respuestas[k]
+            
+            # Evaluar Pregunta 3
+            p3_a_ok = validate_string(respuestas["p3_a"], datos["p3"]["exp_m"])
+            p3_b_ok = respuestas["p3_b"] == datos["p3"]["exp_f"]
+            p3_c_ok, _ = validate_numeric(respuestas["p3_c"], datos["p3"]["v_5"], tolerance=0.005)
+            p3_d_ok, _ = validate_numeric(respuestas["p3_d"], datos["p3"]["a_2"], tolerance=0.005)
+            
+            st.session_state["feedback_respuestas"]["p3_a"] = {"ok": p3_a_ok, "ingresado": respuestas["p3_a"], "esperado": datos["p3"]["exp_m"]}
+            st.session_state["feedback_respuestas"]["p3_b"] = {"ok": p3_b_ok, "ingresado": respuestas["p3_b"], "esperado": datos["p3"]["exp_f"]}
+            st.session_state["feedback_respuestas"]["p3_c"] = {"ok": p3_c_ok, "ingresado": respuestas["p3_c"], "esperado": datos["p3"]["v_5"]}
+            st.session_state["feedback_respuestas"]["p3_d"] = {"ok": p3_d_ok, "ingresado": respuestas["p3_d"], "esperado": datos["p3"]["a_2"]}
+            
+            st.session_state["validada_p3"] = True
+            st.rerun()
         
     # AYUDANTE DE PREGUNTA 3
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
@@ -809,6 +903,34 @@ with st.container():
     with col_p4f6:
         st.markdown('<div class="inline-text"> ) </div>', unsafe_allow_html=True)
         
+    st.markdown("<br>", unsafe_allow_html=True)
+    col_v4_1, col_v4_2 = st.columns([8, 4])
+    with col_v4_2:
+        if st.button("🔍 Validar Pregunta 4", key="btn_validar_p4", use_container_width=True):
+            # Guardar valores
+            for k in ["p4_a", "p4_b", "p4_c", "p4_d", "p4_e", "p4_fx", "p4_fy"]:
+                st.session_state["respuestas_usuario"][k] = respuestas[k]
+            
+            # Evaluar Pregunta 4
+            p4_a_ok = validate_string(respuestas["p4_a"], datos["p4"]["derivada"])
+            p4_b_ok, _ = validate_numeric(respuestas["p4_b"], datos["p4"]["pendiente_min"])
+            p4_c_ok = respuestas["p4_c"] == datos["p4"]["intervalo_dec"]
+            p4_d_ok, _ = validate_numeric(respuestas["p4_d"], datos["p4"]["max_rel"], tolerance=0.1)
+            p4_e_ok = respuestas["p4_e"] == datos["p4"]["concava_arriba"]
+            p4_fx_ok, _ = validate_numeric(respuestas["p4_fx"], datos["p4"]["punto_min_pen_x"])
+            p4_fy_ok, _ = validate_numeric(respuestas["p4_fy"], datos["p4"]["punto_min_pen_y"], tolerance=0.1)
+            
+            st.session_state["feedback_respuestas"]["p4_a"] = {"ok": p4_a_ok, "ingresado": respuestas["p4_a"], "esperado": datos["p4"]["derivada"]}
+            st.session_state["feedback_respuestas"]["p4_b"] = {"ok": p4_b_ok, "ingresado": respuestas["p4_b"], "esperado": datos["p4"]["pendiente_min"]}
+            st.session_state["feedback_respuestas"]["p4_c"] = {"ok": p4_c_ok, "ingresado": respuestas["p4_c"], "esperado": datos["p4"]["intervalo_dec"]}
+            st.session_state["feedback_respuestas"]["p4_d"] = {"ok": p4_d_ok, "ingresado": respuestas["p4_d"], "esperado": datos["p4"]["max_rel"]}
+            st.session_state["feedback_respuestas"]["p4_e"] = {"ok": p4_e_ok, "ingresado": respuestas["p4_e"], "esperado": datos["p4"]["concava_arriba"]}
+            st.session_state["feedback_respuestas"]["p4_fx"] = {"ok": p4_fx_ok, "ingresado": respuestas["p4_fx"], "esperado": datos["p4"]["punto_min_pen_x"]}
+            st.session_state["feedback_respuestas"]["p4_fy"] = {"ok": p4_fy_ok, "ingresado": respuestas["p4_fy"], "esperado": datos["p4"]["punto_min_pen_y"]}
+            
+            st.session_state["validada_p4"] = True
+            st.rerun()
+        
     # AYUDANTE DE PREGUNTA 4
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
         st.markdown("""
@@ -923,6 +1045,34 @@ with st.container():
         dibujar_feedback("p5_slope")
     with col_p5f3:
         st.write("")
+        
+    st.markdown("<br>", unsafe_allow_html=True)
+    col_v5_1, col_v5_2 = st.columns([8, 4])
+    with col_v5_2:
+        if st.button("🔍 Validar Pregunta 5", key="btn_validar_p5", use_container_width=True):
+            # Guardar valores
+            for k in ["p5_a", "p5_b", "p5_k", "p5_d", "p5_infx", "p5_infy", "p5_slope"]:
+                st.session_state["respuestas_usuario"][k] = respuestas[k]
+            
+            # Evaluar Pregunta 5
+            p5_a_ok, _ = validate_numeric(respuestas["p5_a"], datos["p5"]["A"], tolerance=2.0)
+            p5_b_ok, _ = validate_numeric(respuestas["p5_b"], datos["p5"]["B"], tolerance=2.0)
+            p5_k_ok, _ = validate_numeric(respuestas["p5_k"], datos["p5"]["K"], tolerance=0.03)
+            p5_d_ok = respuestas["p5_d"] == str(int(datos["p5"]["max_val"]))
+            p5_infx_ok, _ = validate_numeric(respuestas["p5_infx"], datos["p5"]["inf_x"], tolerance=0.05)
+            p5_infy_ok, _ = validate_numeric(respuestas["p5_infy"], datos["p5"]["inf_y"], tolerance=1.0)
+            p5_slope_ok, _ = validate_numeric(respuestas["p5_slope"], datos["p5"]["max_slope"], tolerance=0.5)
+            
+            st.session_state["feedback_respuestas"]["p5_a"] = {"ok": p5_a_ok, "ingresado": respuestas["p5_a"], "esperado": datos["p5"]["A"]}
+            st.session_state["feedback_respuestas"]["p5_b"] = {"ok": p5_b_ok, "ingresado": respuestas["p5_b"], "esperado": datos["p5"]["B"]}
+            st.session_state["feedback_respuestas"]["p5_k"] = {"ok": p5_k_ok, "ingresado": respuestas["p5_k"], "esperado": datos["p5"]["K"]}
+            st.session_state["feedback_respuestas"]["p5_d"] = {"ok": p5_d_ok, "ingresado": respuestas["p5_d"], "esperado": str(int(datos["p5"]["max_val"]))}
+            st.session_state["feedback_respuestas"]["p5_infx"] = {"ok": p5_infx_ok, "ingresado": respuestas["p5_infx"], "esperado": datos["p5"]["inf_x"]}
+            st.session_state["feedback_respuestas"]["p5_infy"] = {"ok": p5_infy_ok, "ingresado": respuestas["p5_infy"], "esperado": datos["p5"]["inf_y"]}
+            st.session_state["feedback_respuestas"]["p5_slope"] = {"ok": p5_slope_ok, "ingresado": respuestas["p5_slope"], "esperado": datos["p5"]["max_slope"]}
+            
+            st.session_state["validada_p5"] = True
+            st.rerun()
     
     # AYUDANTE DE PREGUNTA 5
     with st.expander("💡 Ayudante Didáctico: ¿Cómo abordar este problema?"):
@@ -968,6 +1118,8 @@ if btn_reiniciar:
     st.session_state["puntos_obtenidos"] = 0.0
     st.session_state["nota_final"] = 1.0
     st.session_state["detalles"] = []
+    for i in range(1, 6):
+        st.session_state[f"validada_p{i}"] = False
     st.rerun()
 
 if btn_calificar:
