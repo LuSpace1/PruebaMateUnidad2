@@ -20,18 +20,19 @@ st.markdown("""
         border-radius: 12px;
     }
     .metric-card {
-        background-color: var(--background-color, #ffffff);
+        background-color: var(--secondary-background-color, #f8fafc);
         color: var(--text-color, #0f172a);
         padding: 20px;
         border-radius: 15px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        border: 1px solid rgba(128,128,128,0.15);
+        border: 1px solid rgba(128,128,128,0.2);
         text-align: center;
     }
     .metric-value {
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 5px;
+        color: var(--text-color, #0f172a);
     }
     .metric-label {
         font-size: 0.9rem;
@@ -40,27 +41,18 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
-    .question-box {
-        background-color: var(--background-color, #ffffff);
-        color: var(--text-color, #0f172a);
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-        margin-bottom: 25px;
-        border-left: 5px solid #0284c7;
-        border-right: 1px solid rgba(128,128,128,0.1);
-        border-top: 1px solid rgba(128,128,128,0.1);
-        border-bottom: 1px solid rgba(128,128,128,0.1);
-    }
     .question-title {
         font-size: 1.25rem;
         font-weight: 600;
         color: var(--text-color, #0f172a);
         margin-bottom: 15px;
+        border-bottom: 2px solid rgba(2, 132, 199, 0.3);
+        padding-bottom: 8px;
     }
     .subquestion-title {
-        font-weight: 500;
-        color: var(--text-color, #334155);
+        font-weight: 600;
+        color: var(--text-color, #1e293b);
+        opacity: 0.95;
         margin-top: 15px;
         margin-bottom: 8px;
     }
@@ -82,8 +74,8 @@ st.markdown("""
         border: 2px solid #e11d48;
     }
     .helper-box {
-        background-color: rgba(2, 132, 199, 0.05);
-        border: 1px solid rgba(2, 132, 199, 0.2);
+        background-color: rgba(2, 132, 199, 0.08);
+        border: 1px solid rgba(2, 132, 199, 0.3);
         color: var(--text-color, #0f172a);
         border-radius: 10px;
         padding: 15px;
@@ -94,6 +86,7 @@ st.markdown("""
     .inline-text {
         font-size: 1rem;
         font-weight: 500;
+        color: var(--text-color, #0f172a);
         display: flex;
         align-items: center;
         height: 100%;
@@ -418,8 +411,7 @@ respuestas = {}
 st.write(f"### Estás rindiendo la **{variacion_sel}** (Puntaje Máximo: 103 Puntos)")
 
 # ==================== PREGUNTA 1 ====================
-with st.container():
-    st.markdown('<div class="question-box">', unsafe_allow_html=True)
+with st.container(border=True):
     st.markdown('<div class="question-title">ESTUDIO DE UNA FUNCIÓN DESCONOCIDA (20 puntos)</div>', unsafe_allow_html=True)
     st.write(f"La gráfica de una función f desconocida de grado 3 (cúbica) pasa por los siguientes puntos :")
     st.latex(datos["p1"]["puntos_enunciado"])
@@ -646,11 +638,8 @@ Este ejercicio consiste en **interpolación polinómica**. Tienes una función c
 Este concepto se utiliza en el diseño de **montañas rusas o trazados de carreteras**. Los ingenieros conocen puntos clave de paso obligatorios por donde debe ir la vía y usan polinomios de tercer grado para conectar dichos puntos con transiciones suaves, seguras y sin cambios bruscos en las fuerzas gravitacionales experimentadas por los pasajeros.
 """)
     
-    st.markdown('</div>', unsafe_allow_html=True)
-
 # ==================== PREGUNTA 2 ====================
-with st.container():
-    st.markdown('<div class="question-box">', unsafe_allow_html=True)
+with st.container(border=True):
     st.markdown('<div class="question-title">PUNTOS DE DERIVADA CERO (8 Puntos)</div>', unsafe_allow_html=True)
     
     # a) Primera derivada cero
@@ -721,11 +710,8 @@ En este ejercicio analizamos cómo las derivadas caracterizan geométricamente a
 En **economía y optimización de negocios**, el punto donde la primera derivada es cero permite encontrar la producción exacta para **maximizar los beneficios** o **minimizar los costos operativos**. El punto donde la segunda derivada es cero (punto de inflexión) representa la ley de rendimientos decrecientes: el límite donde invertir más en marketing comienza a ser menos efectivo debido a la saturación.
 """)
         
-    st.markdown('</div>', unsafe_allow_html=True)
-
 # ==================== PREGUNTA 3 ====================
-with st.container():
-    st.markdown('<div class="question-box">', unsafe_allow_html=True)
+with st.container(border=True):
     st.markdown('<div class="question-title">FUNCIÓN DESCONOCIDA (20 PUNTOS)</div>', unsafe_allow_html=True)
     st.write("La posición de una partícula está representada por una función f desconocida.")
     st.write("La tabla adjunta muestra la pendiente M(x) de la recta tangente a f para algunos valores de x:")
@@ -871,11 +857,8 @@ En este problema analizamos la relación entre progresiones y cálculo aplicado 
 Es la base del funcionamiento de los **sistemas de navegación inercial** en naves espaciales, aviones y teléfonos inteligentes. Los sensores miden de forma continua la aceleración (segunda derivada), la cual se integra una vez para obtener la velocidad (primera derivada) y se integra por segunda vez para calcular la posición exacta del dispositivo en tiempo real.
 """)
         
-    st.markdown('</div>', unsafe_allow_html=True)
-
 # ==================== PREGUNTA 4 ====================
-with st.container():
-    st.markdown('<div class="question-box">', unsafe_allow_html=True)
+with st.container(border=True):
     st.markdown('<div class="question-title">ESTUDIO DE UNA FUNCIÓN CONOCIDA (30 Puntos)</div>', unsafe_allow_html=True)
     st.write("Considere la siguiente función cúbica:")
     st.latex(datos["p4"]["función_latex"])
@@ -1039,11 +1022,8 @@ En este análisis de una función cúbica conocida aplicamos el estudio de curva
 Se utiliza en la **planificación de flujos de caja y liquidez de empresas**. La derivada mide el ritmo de ingresos y egresos de efectivo. El punto de pendiente mínima representa el momento de mayor presión de liquidez (tasa máxima de salida de dinero), fundamental para asegurar que la compañía cuente con las reservas de capital necesarias para afrontar ese instante crítico.
 """)
         
-    st.markdown('</div>', unsafe_allow_html=True)
-
 # ==================== PREGUNTA 5 ====================
-with st.container():
-    st.markdown('<div class="question-box">', unsafe_allow_html=True)
+with st.container(border=True):
     st.markdown('<div class="question-title">CURVA LOGÍSTICA (25 puntos)</div>', unsafe_allow_html=True)
     st.write("En esta pregunta realice los siguientes pasos:")
     st.write("1).- Dada la tabla adjunta, copie los datos de y (en celeste) en la tabla del geogebra.")
@@ -1204,7 +1184,7 @@ Este problema estudia una **curva de crecimiento logístico**, la cual modela cr
 Se utiliza en la **propagación de epidemias** (donde el número total de contagiados empieza exponencialmente, alcanza su velocidad máxima en el punto de inflexión y finalmente se estabiliza debido a la inmunidad de rebaño) o en la **penetración de nuevas tecnologías en el mercado** (como la adopción de internet), que se detiene cuando la población total ya cuenta con el servicio.
 """)
         
-    st.markdown('</div>', unsafe_allow_html=True)
+    # Fin Pregunta 5
 
 
 # ==================== BOTÓN DE ENVÍO Y CALIFICACIÓN ====================
