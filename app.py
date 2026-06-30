@@ -590,7 +590,7 @@ with st.container():
     st.markdown('<div class="subquestion-title">f) ¿En cuál intervalo f es creciente? (4 puntos)</div>', unsafe_allow_html=True)
     col_f1, col_f2, col_f3, col_f4, col_f5, col_f6, col_f7 = st.columns([4, 1.5, 0.3, 1.5, 0.3, 2.5, 1.9], vertical_alignment="center")
     with col_f1:
-        st.markdown('<div class="inline-text"> f es decreciente en el intervalo ] </div>', unsafe_allow_html=True)
+        st.markdown('<div class="inline-text"> f es creciente en el intervalo ] </div>', unsafe_allow_html=True)
     with col_f2:
         val_p1_int1 = st.session_state["respuestas_usuario"].get("p1_int1", "")
         respuestas["p1_int1"] = st.text_input("", value=val_p1_int1, key="p1_int1", label_visibility="collapsed")
